@@ -1,0 +1,78 @@
+# -----------------
+# Python
+# -----------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+*.so
+
+# Virtual environments
+.env
+.venv/
+env/
+venv/
+*.yml
+
+# -----------------
+# Jupyter
+# -----------------
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# -----------------
+# Logs / Outputs
+# -----------------
+*.log
+*.out
+*.err
+
+# -----------------
+# Snakemake
+# -----------------
+# Hidden workflow state
+.snakemake/
+
+# Checkpoint + metadata files
+*.snakemake_timestamp
+*.snakemake_jobid
+
+# Common outputs
+*.html
+*.tsv
+*.csv
+*.txt
+*.pdf
+*.png
+*.svg
+*.jpeg
+*.jpg
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Cluster / HPC job scripts
+slurm-*.out
+*.sh.e*
+*.sh.o*
+
+# -----------------
+# OS-specific
+# -----------------
+.DS_Store
+Thumbs.db
+
+# - - - - - - - - 
+# Results Folders
+# - - - - - - - -
+
+Data/
+tg_refs/
+cont_refs/
+toxo_reads/
+Visuals/
