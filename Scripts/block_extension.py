@@ -1,6 +1,5 @@
 ############################################ Loading Libraries and Input Data ##################################
 
-
 #!/usr/bin/env python3
 from utils.blast_utils import retrieve_nhits_alignments, blastn_subject, makeblast_db, blastn, default_blast_columns
 from utils.block_utils import align_seed_neighbours, find_block_boundaries, extend_seeds_to_blocks

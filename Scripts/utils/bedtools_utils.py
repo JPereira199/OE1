@@ -77,6 +77,68 @@ def blast_to_bed(blast_df: pd.DataFrame, seqid: str = 'qseqid', start_coord: str
     return(bed_df)
 
 
+def _load_kmer_table(path):
+    """
+    Load a k-mer file that may be TSV (kmer<TAB>count) or FASTA (>header newline sequence).
+    Returns a DataFrame with columns:
+      - 'sequence' : the k-mer string
+      - 'header'   : the header string (count if that's what the tool wrote)
+      - 'header_numeric' : numeric version of header when possible (else NaN)
+    """
+    path = Path(path)
+
+    def _open_text(p):
+        return gzip.open(p, "rt") if str(p).endswith((".gz", ".gzip")) else open(p, "r")
+
+    # Peek first non-empty line to detect format
+    first_line = None
+    with _open_text(path) as fh:
+        for line in fh:
+            if line.strip():
+                first_line = line
+                break
+
+    if first_line is None:
+        # empty file
+        return pd.DataFrame(columns=["seq", "count"])
+
+    is_fasta = first_line.lstrip().startswith(">")
+
+    if is_fasta:
+        # Parse FASTA into (sequence, header)
+        seqs = []
+        header = None
+        buf = []
+        with _open_text(path) as fh:
+            for raw in fh:
+                line = raw.rstrip("\n")
+                if not line:
+                    continue
+                if line.startswith(">"):
+                    # flush previous
+                    if header is not None:
+                        seqs.append(("".join(buf), header[1:]))  # drop leading '>'
+                    header = line
+                    buf = []
+                else:
+                    buf.append(line.strip())
+            # flush last record
+            if header is not None:
+                seqs.append(("".join(buf), header[1:]))
+
+        df = pd.DataFrame(seqs, columns=["seq", "count"])
+        df["count"] = pd.to_numeric(df["count"], errors="coerce")
+        return df
+
+    # Otherwise: treat as TSV with two columns (no header row)
+    df = pd.read_csv(path, sep="\t", header=None, comment="#", dtype=str, names=["seq", "count"])
+    # Some tools might add extra columns; keep just the first two
+    if df.shape[1] > 2:
+        df = df.iloc[:, :2]
+        df.columns = ["seq", "count"]
+    df["count"] = pd.to_numeric(df["count"], errors="coerce")
+    return df
+
 def bbtools_kmercountexact(
     infile: Path,
     outfile: Path,
@@ -151,3 +213,9 @@ def bbtools_kmercountexact(
     except subprocess.CalledProcessError as e:
         sys.exit(f"❌ kmercountexact.sh failed (exit code {e.returncode}).")
         raise
+    
+    if not make_fasta:
+       kmer_counts_df = _load_kmer_table(outfile)
+       kmer_counts_df.to_csv(outfile, sep='\t', header=False, index=False)
+
+

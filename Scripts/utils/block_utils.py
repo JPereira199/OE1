@@ -896,7 +896,10 @@ def extend_seeds_to_blocks(
 
                 # mark seeds included in this block (by BLAST mapping of seeds -> block)
                 mapped_seeds.add(seed)
-
+                
+                #### - - - - Add to mapped seeds those that are present in the block - - - - - - - - - - - - - 
+                from pandas.errors import EmptyDataError
+                
                 blast_output_table_tsv = output_dir / "temp.blast.seeds_fragment.tsv"
                 blastn_subject(
                     blast_input_seqs=temp_seeds_fasta,
@@ -907,6 +910,14 @@ def extend_seeds_to_blocks(
                     gapopen=gap_open_blast,
                     penalty=penalty_blast,
                 )
+                
+                # Try to read BLAST output
+                try:
+                    seeds_block_df = pd.read_csv(blast_output_table_tsv, sep='\t', header=None)
+                except EmptyDataError:
+                    # File exists but is empty → skip this iteration
+                    print(f"Skipping {blast_output_table_tsv}, file is empty.")
+                    continue  
 
                 seeds_block_df = pd.read_csv(blast_output_table_tsv, sep="\t")
                 seeds_block_df.columns = list(default_blast_columns)
@@ -918,6 +929,8 @@ def extend_seeds_to_blocks(
 
                 mapped_seeds.update(seeds_block_df["qseqid"])
 
+                #### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                
                 # block summary
                 blocks_summary.append(
                     dict(

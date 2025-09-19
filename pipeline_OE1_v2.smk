@@ -21,7 +21,7 @@ MCL_D        = 'mcl_clustering'
 SEEDS_D      = 'make_seeds'
 
 task = {
-    'filter_sizes.rule'             : (D_PATH, FILTERS_D, 'toxo1.size_filtered.fasta'),
+    'filter_sizes.rule'             : (D_PATH, FILTERS_D, 'reads.size_filtered.fasta'),
     'join_cont_refs.rule'           : (D_PATH, JOIN_CREFS_D, 'join_crefs.fastq'),
     'map_contamination.rule'        : (D_PATH, MAPC_D, 'query_x_ref-contamination.paf'),
     'discard_contamination.rule'    : (D_PATH, DECONT_D, 'decont.fasta'),
@@ -307,7 +307,7 @@ rule make_seeds:
     threads:
         config['make_seeds.threads']
     output:
-        seeds_dir = directory(os.path.join(D_PATH, SEEDS_D))
+        seeds_dir = directory(os.path.join(D_PATH, SEEDS_D)),
         sentinel_make_seeds = os.path.join(D_PATH, SEEDS_D, '.sentinel.make_seeds')
     shell:
         """
@@ -315,7 +315,7 @@ rule make_seeds:
          --input-fasta-dir {input.fasta_dir} \
          --params-min-fasta-size {params.min_fasta_size} \
          --params-kmer-size {params.kmer_size} \
-         --params-kmer-counts {params.min_kmer_counts} \
+         --params-min-kmer-counts {params.min_kmer_counts} \
          --params-threads {threads} \
          --output-seeds-dir {output.seeds_dir}
 
