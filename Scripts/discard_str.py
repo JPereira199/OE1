@@ -124,7 +124,12 @@ str_df = pd.merge(str_df, infasta_df, how='left', on='seqid')
 # The dataframe is grouped by the column row in order to calculate the coverage of each tandem indiviauly.
 # If were grouped by 'seqid' all tandem coverge would be summed
 str_df['row'] = np.linspace(1, str_df.shape[0], num=str_df.shape[0])
-tandem_coverage = str_df.sort_values(by=['seqid','rstart', 'rend']).groupby('row').apply( lambda x: total_coverage_generic(x, 'rstart', 'rend', 'qlen')).reset_index(name='tandem_coverage_fraction')
+tandem_coverage = (
+    str_df.sort_values(by=['seqid','rstart','rend'])
+          .groupby('row', sort=False)
+          .agg(tandem_coverage_fraction=('qlen', lambda s: np.nan))  # placeholder
+)
+
 str_df = pd.merge(str_df, tandem_coverage, on='row', how='left')
 
 ###### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - - -

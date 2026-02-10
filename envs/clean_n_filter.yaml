@@ -1,0 +1,23 @@
+name: filter_fastx
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python >=3.10
+
+  # FASTQ quality filtering (ONT-friendly)
+  - nanofilt
+
+  # FASTQ -> FASTA conversion (handles .gz automatically)
+  - seqkit
+
+  # FASTA parsing/writing
+  - biopython
+
+  # Plotting + histograms
+  - matplotlib
+  - seaborn
+
+  # Stats helpers
+  - numpy
+  - pandas

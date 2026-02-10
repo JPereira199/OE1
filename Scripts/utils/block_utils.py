@@ -600,7 +600,8 @@ import pandas as pd
 
 def extend_seeds_to_blocks(
     *,
-    output_dir: Union[str, Path],
+    output_data_dir: Union[str, Path],
+    output_vis_dir: Union[str, Path],
     seeds_df: pd.DataFrame,
     seeds_hits_df: pd.DataFrame,
     blast_df: pd.DataFrame,
@@ -644,20 +645,20 @@ def extend_seeds_to_blocks(
           - 'visuals_dir' (Path)
           - 'blocks' (List[Dict]): per-block summary (seed, positions, lengths, sequence, etc.)
     """
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_data_dir = Path(output_data_dir)
+    output_data_dir.mkdir(parents=True, exist_ok=True)
 
     # ---------- Prepare FASTA with all seeds (subject for later BLAST) ----------
-    temp_seeds_fasta = output_dir / "temp.seeds.fasta"
+    temp_seeds_fasta = output_data_dir / "temp.seeds.fasta"
     with open(temp_seeds_fasta, "w") as fasta:
         for _, row in seeds_df.iterrows():
             fasta.write(f">{row['qseqid']}\n{row['seq']}\n")
 
     mapped_seeds: set = set()
 
-    output_blocks_fasta = output_dir / "blocks.fasta"
-    temp_block_fasta = output_dir / "block-temp.fasta"
-    visuals_dir = output_dir / "block_extension_plots"
+    output_blocks_fasta = output_data_dir / "blocks.fasta"
+    temp_block_fasta = output_data_dir / "block-temp.fasta"
+    visuals_dir = output_vis_dir / "block_extension_plots"
     visuals_dir.mkdir(parents=True, exist_ok=True)
 
     # init final FASTA
@@ -900,7 +901,7 @@ def extend_seeds_to_blocks(
                 #### - - - - Add to mapped seeds those that are present in the block - - - - - - - - - - - - - 
                 from pandas.errors import EmptyDataError
                 
-                blast_output_table_tsv = output_dir / "temp.blast.seeds_fragment.tsv"
+                blast_output_table_tsv = output_data_dir / "temp.blast.seeds_fragment.tsv"
                 blastn_subject(
                     blast_input_seqs=temp_seeds_fasta,
                     blast_subject_seqs=temp_block_fasta,
@@ -978,6 +979,7 @@ def extend_seeds_to_blocks(
                         params_window_radius=params_window_radius,
                         n=n,
                         visuals_dir=visuals_dir,
+                        show=False
                     )
 
                     plot_consensus_frequency(
@@ -998,6 +1000,7 @@ def extend_seeds_to_blocks(
                         end_block_pos=end_block_pos,
                         n=n,
                         visuals_dir=visuals_dir,
+                        show=False
                     )
                 except NameError:
                     # If the user didn't import the plot helpers, just skip plotting silently

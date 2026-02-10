@@ -1,0 +1,24 @@
+name: define_blocks
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  # --- Core ---
+  - python >=3.10
+
+  # --- BLAST ---
+  - blast
+
+  # --- Data handling ---
+  - pandas
+  - numpy
+
+  # --- Bio ---
+  - biopython
+
+  # --- Plotting (used early in script) ---
+  - matplotlib
+
+  # --- External tools called via utils ---
+  - bedtools
+  - vsearch

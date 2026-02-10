@@ -1,0 +1,96 @@
+Assuming unrestricted shared filesystem usage.
+host: frigobar
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 30
+Rules claiming more threads will be scaled down.
+Job stats:
+job                      count
+---------------------  -------
+all                          1
+blast_to_abc                 1
+block_extension              1
+check_GC                     1
+discard_contamination        1
+discard_str                  1
+filter_sizes                 1
+find_str                     1
+join_cont_refs               1
+make_seeds                   1
+map_contamination            1
+mcl_clustering               1
+total                       12
+
+Select jobs to execute...
+OSError: [Errno 28] No space left on device
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/snakemake/cli.py", line 2095, in args_to_api
+    dag_api.execute_workflow(
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/snakemake/api.py", line 595, in execute_workflow
+    workflow.execute(
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/snakemake/workflow.py", line 1302, in execute
+    raise e
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/snakemake/workflow.py", line 1298, in execute
+    success = self.scheduler.schedule()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/snakemake/scheduler.py", line 270, in schedule
+    run = self.job_selector(needrun)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/snakemake/scheduler.py", line 483, in job_selector
+    return self._job_selector(jobs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/snakemake/scheduler.py", line 616, in job_selector_ilp
+    status = self._solve_ilp(prob, time_limit=10)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/snakemake/scheduler.py", line 665, in _solve_ilp
+    return prob.solve(solver)
+           ^^^^^^^^^^^^^^^^^^
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/pulp/pulp.py", line 1883, in solve
+    status = solver.actualSolve(self, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/pulp/apis/coin_api.py", line 112, in actualSolve
+    return self.solve_CBC(lp, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/pulp/apis/coin_api.py", line 128, in solve_CBC
+    vs, variablesNames, constraintsNames, objectiveName = lp.writeMPS(
+                                                          ^^^^^^^^^^^^
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/pulp/pulp.py", line 1748, in writeMPS
+    return mpslp.writeMPS(
+           ^^^^^^^^^^^^^^^
+
+  File "/home/jpereira/miniconda3/envs/OE1/lib/python3.11/site-packages/pulp/mps_lp.py", line 251, in writeMPS
+    with open(filename, "w") as f:
+
+OSError: [Errno 28] No space left on device
+
+
+Final Files:
+
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/filter_sizes/reads.size_filtered.fasta
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/join_cont_refs/join_crefs.fastq
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/map_contamination/query_x_ref-contamination.paf
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/decontamination/decont.fasta
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/check_gc/decont.low_gc.fasta
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/short_tandem_repeats/short_tandem_repeats.tsv
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/short_tandem_repeats/sequences_wo_str.fasta
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/blast_to_abc/blast_map.abc
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/mcl_clustering/seq_distances.mci
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/make_seeds/.sentinel.make_seeds
+/home/jpereira/OEs/Results/OE1/TgRH_Rieske_bar01/Data/block_extension/.sentinel.block_extension

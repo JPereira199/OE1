@@ -1,0 +1,975 @@
+Assuming unrestricted shared filesystem usage.
+host: frigobar
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 40
+Rules claiming more threads will be scaled down.
+Job stats:
+job                        count
+-----------------------  -------
+all                            1
+blast_to_abc                   1
+blastn_dotplot_unmapped        1
+block_extension                1
+check_GC                       1
+decont_stats                   1
+define_blocks                  1
+discard_contamination          1
+discard_str                    1
+filter_sizes                   1
+find_str                       1
+make_seeds                     1
+map_contamination              1
+mcl_clustering                 1
+total                         14
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Feb  9 09:29:44 2026]
+Job 1: 
+        Discard any sequences from a query fasta file with a size below 1200 nucleotides 
+        
+Reason: Params have changed since last execution
+
+[Mon Feb  9 09:29:55 2026]
+Finished job 1.
+1 of 14 steps (7%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Feb  9 09:29:55 2026]
+Job 3: 
+        Maps the query fasta against the reference genomes from different contamintan organisms
+        
+Reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/filter_sizes/reads.size_filtered.fasta
+
+[M::mm_idx_gen::93.254*1.55] collected minimizers
+[M::mm_idx_gen::97.177*2.47] sorted minimizers
+[M::main::97.177*2.47] loaded/built the index for 8862 target sequence(s)
+[M::mm_mapopt_update::99.321*2.44] mid_occ = 1394
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 8862
+[M::mm_idx_stat::100.659*2.42] distinct minimizers: 141722133 (29.11% are singletons); average occurrences: 10.529; average spacing: 5.367; total length: 8008774714
+[M::worker_pipeline::133.098*8.66] mapped 53757 sequences
+[M::worker_pipeline::165.949*12.32] mapped 51034 sequences
+[M::worker_pipeline::197.146*14.83] mapped 50949 sequences
+[M::worker_pipeline::224.914*16.00] mapped 43153 sequences
+[M::mm_idx_gen::238.376*15.18] collected minimizers
+[M::mm_idx_gen::238.680*15.20] sorted minimizers
+[M::main::238.680*15.20] loaded/built the index for 734 target sequence(s)
+[M::mm_mapopt_update::238.680*15.20] mid_occ = 1394
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 734
+[M::mm_idx_stat::239.430*15.15] distinct minimizers: 65412960 (54.56% are singletons); average occurrences: 2.977; average spacing: 5.760; total length: 1121802916
+[M::worker_pipeline::272.349*16.79] mapped 53757 sequences
+[M::worker_pipeline::304.529*17.99] mapped 51034 sequences
+[M::worker_pipeline::337.031*19.03] mapped 50949 sequences
+[M::worker_pipeline::380.487*19.20] mapped 43153 sequences
+[M::main] Version: 2.28-r1209
+[M::main] CMD: minimap2 -x map-ont -c --secondary=no -t 30 -o /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/map_contamination/query_x_ref-contamination.paf /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/join_cont_refs/join_crefs.fastq /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/filter_sizes/reads.size_filtered.fasta
+[M::main] Real time: 381.627 sec; CPU: 7306.080 sec; Peak RSS: 32.671 GB
+[Mon Feb  9 09:36:18 2026]
+Finished job 3.
+2 of 14 steps (14%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Feb  9 09:36:18 2026]
+Job 4: 
+        Given a PAF alignment table, discard sequences from the filtered FASTA
+        that have a "good" mapping against any contamination references, based on:
+          - min alignment length
+          - max de
+          - min query coverage
+        
+Reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/filter_sizes/reads.size_filtered.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/map_contamination/query_x_ref-contamination.paf
+
+[Mon Feb  9 09:36:26 2026]
+Finished job 4.
+3 of 14 steps (21%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Feb  9 09:36:26 2026]
+localrule check_GC:
+    input: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decontamination/decont.fasta
+    output: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/input_gc_table.txt, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/decont.low_gc.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/decont.high_gc.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/gc_stats.tsv
+    jobid: 5
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decontamination/decont.fasta
+    resources: tmpdir=/home/jpereira/tmp
+
+[INFO][0m 2838 patterns loaded from file
+[INFO][0m 5078 patterns loaded from file
+[Mon Feb  9 09:36:27 2026]
+Finished job 5.
+4 of 14 steps (29%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Feb  9 09:36:27 2026]
+localrule find_str:
+    input: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/decont.low_gc.fasta, /home/jpereira/OEs/OE1.v2/Scripts/trf
+    output: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/short_tandem_repeats.tsv
+    jobid: 6
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/decont.low_gc.fasta
+    resources: tmpdir=/home/jpereira/tmp
+
+decont.low_gc.fasta.2.7.7.80.10.50.2000.dat
+filtered_str.tsv
+log.trf
+repeats.fasta
+sequences_wo_str.fasta
+short_tandem_repeats.fasta
+[Mon Feb  9 09:36:28 2026]
+Finished job 6.
+5 of 14 steps (36%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Feb  9 09:36:28 2026]
+localrule discard_str:
+    input: /home/jpereira/OEs/OE1.v2/Scripts/discard_str.py, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/decont.low_gc.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/short_tandem_repeats.tsv
+    output: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/short_tandem_repeats.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/repeats.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/filtered_str.tsv
+    jobid: 7
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/decont.low_gc.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/short_tandem_repeats.tsv
+    resources: tmpdir=/home/jpereira/tmp
+
+[Mon Feb  9 09:36:30 2026]
+Finished job 7.
+6 of 14 steps (43%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Feb  9 09:36:30 2026]
+localrule blast_to_abc:
+    input: /home/jpereira/OEs/OE1.v2/Scripts/blast_to_abc.py, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/sequences_wo_str.fasta
+    output: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/blastn.seqs_wo_str.inner.tsv, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/blast_map.abc, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/uninformative_sequences.fasta
+    jobid: 8
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/sequences_wo_str.fasta
+    threads: 40
+    resources: tmpdir=/home/jpereira/tmp
+
+
+
+Building a new DB, current time: 02/09/2026 09:36:44
+New DB name:   /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/decont_inner_db/sequences_wo_str.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/sequences_wo_str.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/decont_inner_db/sequences_wo_str.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 2838 sequences in 0.112396 seconds.
+
+
+/home/jpereira/OEs/OE1.v2/Scripts/blast_to_abc.py:95: DeprecationWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  total_coverage_qs = group_qs_df.apply(lambda x: blast.total_coverage_temp(x, use='subject')).reset_index(name='coverage_fraction')
+Warning output db directory already exist: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/decont_inner_db
+makeblastdb ran successfully.
+Running: blastn -query /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/sequences_wo_str.fasta -db /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/decont_inner_db/sequences_wo_str.fasta -out /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/blastn.seqs_wo_str.inner.tsv -num_threads 40 -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 20 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn ran successfully.
+[Mon Feb  9 12:28:45 2026]
+Finished job 8.
+7 of 14 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Feb  9 12:28:45 2026]
+Job 9: 
+        Clusterize a set sequences with MCL using the total coverage between them.
+        
+Reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/blast_map.abc, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/sequences_wo_str.fasta
+
+..........................[mclIO] writing </home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/seq_distances.mci>
+.......................................
+[mclIO] wrote native interchange 2674x2674 matrix with 779262 entries to stream </home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/seq_distances.mci>
+[mclIO] wrote 2674 tab entries to stream </home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/seq_names.list>
+[mcxload] tab has 2674 entries
+[mclIO] reading </home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/seq_distances.mci>
+.......................................
+[mclIO] read native interchange 2674x2674 matrix with 779262 entries
+[mcl] pid 2240965
+ ite -------------------  chaos  time hom(avg,lo,hi) m-ie m-ex i-ex fmv
+  1  ................... 136.52  0.53 1.75/0.02/9.57 7.05 4.11 4.11  97
+  2  ................... 166.59  2.37 0.53/0.07/3.86 2.16 0.92 3.77  99
+  3  ................... 160.21  1.65 0.34/0.07/3.47 1.68 0.97 3.66  99
+  4  ................... 112.75  1.55 0.23/0.05/1.77 1.24 0.77 2.80  99
+  5  ...................  85.66  0.93 0.16/0.07/2.99 1.10 0.63 1.76  99
+  6  ...................  55.16  0.40 0.15/0.09/1.05 1.07 0.64 1.13  99
+  7  ...................  39.91  0.19 0.22/0.15/1.00 1.06 0.64 0.72  99
+  8  ...................  21.80  0.09 0.45/0.35/1.00 1.06 0.58 0.42  99
+  9  ...................  10.69  0.04 0.75/0.45/1.00 1.09 0.58 0.24  98
+ 10  ...................   3.36  0.02 0.90/0.58/1.00 1.11 0.33 0.08  97
+ 11  ...................   0.98  0.01 0.92/0.59/1.00 1.10 0.29 0.02  91
+ 12  ...................   1.06  0.00 0.90/0.57/1.00 1.30 0.47 0.01   0
+ 13  ...................   0.91  0.00 0.85/0.55/1.00 1.03 0.67 0.01   0
+ 14  ...................   0.72  0.00 0.80/0.58/1.00 1.01 0.95 0.01   0
+ 15  ...................   0.66  0.00 0.78/0.62/1.00 1.00 0.99 0.01   0
+ 16  ...................   0.66  0.00 0.79/0.64/1.00 1.00 1.00 0.01   0
+ 17  ...................   0.56  0.00 0.85/0.71/1.00 1.00 1.00 0.01   0
+ 18  ...................   0.56  0.00 0.92/0.71/1.00 1.00 1.00 0.01   0
+ 19  ...................   0.39  0.00 0.97/0.74/1.00 1.00 0.96 0.01   0
+ 20  ...................   0.38  0.00 0.99/0.76/1.00 1.00 1.00 0.01   0
+ 21  ...................   0.34  0.00 1.00/0.78/1.00 1.00 1.00 0.01   0
+ 22  ...................   0.16  0.00 1.00/0.84/1.00 1.00 0.53 0.00   0
+ 23  ...................   0.08  0.00 1.00/0.92/1.00 1.00 1.00 0.00   0
+ 24  ...................   0.03  0.00 1.00/0.97/1.00 1.00 1.00 0.00   0
+ 25  ...................   0.00  0.00 1.00/1.00/1.00 1.00 1.00 0.00   0
+ 26  ...................   0.00  0.00 1.00/1.00/1.00 1.00 1.00 0.00   0
+ 27  ...................   0.00  0.00 1.00/1.00/1.00 1.00 1.00 0.00   0
+[mcl] jury pruning marks: <92,91,98>, out of 100
+[mcl] jury pruning synopsis: <92.5 or scrumptious> (cf -scheme, -do log)
+[mclIO] writing </home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/out.seq_distances.mci.I14>
+.........................
+[mclIO] wrote native interchange 2674x25 matrix with 2674 entries to stream </home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/out.seq_distances.mci.I14>
+[mcl] 25 clusters found
+[mcl] output is in /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/out.seq_distances.mci.I14
+
+Please cite:
+    Stijn van Dongen, Graph Clustering Via a Discrete Uncoupling Process,
+    SIAM Journal on Matrix Analysis and Applications, 30(1):121-141, 2008.
+    ( http://link.aip.org/link/?SJMAEL/30/121/1 )
+[mclIO] reading </home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/out.seq_distances.mci.I14>
+.........................
+[mclIO] read native interchange 2674x25 matrix with 2674 entries
+mcxdump completed successfully. Output: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/dump.mci
+[Mon Feb  9 12:29:08 2026]
+Finished job 9.
+8 of 14 steps (57%) done
+Select jobs to execute...
+Execute 2 jobs...
+
+[Mon Feb  9 12:29:08 2026]
+Job 12: 
+        Computing decontamination statistics and NAM-block coverage across pipeline steps.
+        Generating per-step coverage plots and a global summary barplot.
+        
+Reason: Missing output files: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decont_stats/summary.tsv; Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/filter_sizes/reads.size_filtered.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/decont.low_gc.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decontamination/decont.fasta
+
+Activating conda environment: .snakemake/conda/e1c96a6c773163e36077ead63b584610_
+
+[Mon Feb  9 12:29:08 2026]
+localrule make_seeds:
+    input: /home/jpereira/OEs/OE1.v2/Scripts/make_seeds.py, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters
+    output: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_1.tsv, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/.sentinel.make_seeds
+    jobid: 10
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters
+    threads: 10
+    resources: tmpdir=/home/jpereira/tmp
+
+java -ea -Xmx233542m -Xms233542m -cp /usr/local/bin/current/ jgi.KmerCountExact in=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_2.fasta k=35 threads=10 mincount=35 fastadump=f out=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_2.tsv overwrite=true
+Executing jgi.KmerCountExact [in=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_2.fasta, k=35, threads=10, mincount=35, fastadump=f, out=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_2.tsv, overwrite=true]
+
+Set threads to 10
+Initial:
+Memory: max=244913m, total=244913m, free=244828m, used=85m
+
+Executing ukmer.KmerTableSetU [in=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_2.fasta, k=35, threads=10, mincount=35, fastadump=f, out=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_2.tsv, overwrite=true]
+
+K was changed from 35 to 34
+Initial:
+Ways=31, initialSize=128000, prefilter=f, prealloc=f
+Memory: max=244913m, total=244913m, free=244811m, used=102m
+
+After table allocation:
+Memory: max=244913m, total=244913m, free=244656m, used=257m
+
+After loading:
+Memory: max=244913m, total=244913m, free=241288m, used=3625m
+
+Input:                      	196 reads 		2280429 bases.
+
+For K=34
+Unique Kmers:               	1982358
+Average Kmer Count:         	1.147
+Estimated Kmer Depth:       	0.269
+Estimated Read Depth:       	0.270
+
+Load Time:                  	0.415 seconds.
+
+
+Building a new DB, current time: 02/09/2026 12:29:09
+New DB name:   /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decont_stats/01_Input/blastdb/reads.size_filtered.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/filter_sizes/reads.size_filtered.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Kmer Dump Time:             	0.125 seconds.
+java -ea -Xmx233420m -Xms233420m -cp /usr/local/bin/current/ jgi.KmerCountExact in=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta k=35 threads=10 mincount=35 fastadump=f out=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_1.tsv overwrite=true
+Executing jgi.KmerCountExact [in=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, k=35, threads=10, mincount=35, fastadump=f, out=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_1.tsv, overwrite=true]
+
+Set threads to 10
+Initial:
+Memory: max=244779m, total=244779m, free=244694m, used=85m
+
+Executing ukmer.KmerTableSetU [in=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, k=35, threads=10, mincount=35, fastadump=f, out=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_1.tsv, overwrite=true]
+
+K was changed from 35 to 34
+Initial:
+Ways=31, initialSize=128000, prefilter=f, prealloc=f
+Memory: max=244779m, total=244779m, free=244677m, used=102m
+
+After table allocation:
+Memory: max=244779m, total=244779m, free=244524m, used=255m
+
+After loading:
+Memory: max=244779m, total=244779m, free=241043m, used=3736m
+
+Input:                      	2415 reads 		10769864 bases.
+
+For K=34
+Unique Kmers:               	9212013
+Average Kmer Count:         	1.160
+Estimated Kmer Depth:       	0.293
+Estimated Read Depth:       	0.295
+
+Load Time:                  	0.851 seconds.
+Kmer Dump Time:             	0.222 seconds.
+⚠️ Skipping cluster_24.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_5.fasta: only 4 entries (min is 35)
+⚠️ Skipping cluster_17.fasta: only 2 entries (min is 35)
+❌ Skipping non-FASTA/Q file: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/.snakemake_timestamp
+⚠️ Skipping cluster_18.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_4.fasta: only 4 entries (min is 35)
+⚠️ Skipping cluster_9.fasta: only 3 entries (min is 35)
+⚠️ Skipping cluster_25.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_12.fasta: only 0 entries (min is 35)
+⚠️ Skipping cluster_3.fasta: only 6 entries (min is 35)
+▶ Running: kmercountexact.sh in=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_2.fasta k=35 threads=10 mincount=35 fastadump=f out=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_2.tsv overwrite=true
+⚠️ Skipping cluster_10.fasta: only 3 entries (min is 35)
+⚠️ Skipping cluster_8.fasta: only 4 entries (min is 35)
+⚠️ Skipping cluster_11.fasta: only 3 entries (min is 35)
+⚠️ Skipping cluster_6.fasta: only 4 entries (min is 35)
+⚠️ Skipping cluster_13.fasta: only 2 entries (min is 35)
+▶ Running: kmercountexact.sh in=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta k=35 threads=10 mincount=35 fastadump=f out=/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_1.tsv overwrite=true
+⚠️ Skipping cluster_19.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_23.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_14.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_20.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_7.fasta: only 4 entries (min is 35)
+⚠️ Skipping cluster_21.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_22.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_16.fasta: only 2 entries (min is 35)
+⚠️ Skipping cluster_15.fasta: only 2 entries (min is 35)
+[Mon Feb  9 12:29:11 2026]
+Finished job 10.
+9 of 14 steps (64%) done
+Select jobs to execute...
+Waiting for more resources.
+Adding sequences from FASTA; added 198893 sequences in 13.2114 seconds.
+
+
+
+
+Building a new DB, current time: 02/09/2026 12:29:32
+New DB name:   /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decont_stats/02_Decontamination/blastdb/decont.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decontamination/decont.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 7916 sequences in 0.48315 seconds.
+
+
+
+
+Building a new DB, current time: 02/09/2026 12:29:33
+New DB name:   /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decont_stats/03_GC_filter/blastdb/decont.low_gc.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/decont.low_gc.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 2838 sequences in 0.114483 seconds.
+
+
+
+
+Building a new DB, current time: 02/09/2026 12:29:34
+New DB name:   /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decont_stats/04_STR_filter/blastdb/sequences_wo_str.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/sequences_wo_str.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 2838 sequences in 0.117167 seconds.
+
+
+
+
+Building a new DB, current time: 02/09/2026 12:29:35
+New DB name:   /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decont_stats/05_MCL_filter/blastdb/cluster_1.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 2415 sequences in 0.093086 seconds.
+
+
+makeblastdb ran successfully.
+blastn ran successfully.
+makeblastdb ran successfully.
+blastn ran successfully.
+makeblastdb ran successfully.
+blastn ran successfully.
+makeblastdb ran successfully.
+blastn ran successfully.
+makeblastdb ran successfully.
+blastn ran successfully.
+[Mon Feb  9 12:29:37 2026]
+Finished job 12.
+10 of 14 steps (71%) done
+Execute 1 jobs...
+
+[Mon Feb  9 12:29:37 2026]
+localrule block_extension:
+    input: /home/jpereira/OEs/OE1.v2/Scripts/block_extension.py, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_1.tsv
+    output: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Visuals/block_extension, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/blocks.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/.sentinel.block_extension
+    jobid: 11
+    reason: Missing output files: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/.sentinel.block_extension, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/blocks.fasta; Input files updated by another job: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_1.tsv
+    threads: 40
+    resources: tmpdir=/home/jpereira/tmp
+
+
+
+Building a new DB, current time: 02/09/2026 12:29:37
+New DB name:   /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/input_reads_db/cluster_1.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 2415 sequences in 0.091001 seconds.
+
+
+makeblastdb ran successfully.
+blastn ran successfully.
+Working on target seed: k:7_c:914
+Mapping seed: k:7_c:914
+
+Processing Block Number: 1
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:6_c:915
+Mapping seed: k:6_c:915
+
+Processing Block Number: 2
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:13_c:813
+Mapping seed: k:13_c:813
+
+Processing Block Number: 3
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:46_c:603
+Mapping seed: k:46_c:603
+
+Processing Block Number: 4
+
+Seed initial size: 34
+Warning! Alignment extension (642) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:12_c:820
+Mapping seed: k:12_c:820
+
+Processing Block Number: 5
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:11_c:822
+Mapping seed: k:11_c:822
+
+Processing Block Number: 6
+
+Seed initial size: 34
+Warning! Alignment extension (645) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:5271_c:36
+Mapping seed: k:5271_c:36
+
+Processing Block Number: 7
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:48_c:600
+Mapping seed: k:48_c:600
+
+Processing Block Number: 8
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:982_c:89
+Mapping seed: k:982_c:89
+
+Processing Block Number: 9
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:4184_c:41
+Mapping seed: k:4184_c:41
+
+Processing Block Number: 10
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:1476_c:73
+Mapping seed: k:1476_c:73
+
+Processing Block Number: 11
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:14_c:811
+Mapping seed: k:14_c:811
+
+Processing Block Number: 12
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:521_c:122
+Mapping seed: k:521_c:122
+
+Processing Block Number: 13
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:16_c:787
+Mapping seed: k:16_c:787
+
+Processing Block Number: 14
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:21_c:736
+Mapping seed: k:21_c:736
+
+Processing Block Number: 15
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:117_c:368
+Mapping seed: k:117_c:368
+
+Processing Block Number: 16
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:100_c:397
+Mapping seed: k:100_c:397
+
+Processing Block Number: 17
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2114_c:58
+Mapping seed: k:2114_c:58
+
+Processing Block Number: 18
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:5612_c:35
+Mapping seed: k:5612_c:35
+
+Processing Block Number: 19
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:10_c:836
+Mapping seed: k:10_c:836
+
+Processing Block Number: 20
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:691_c:107
+Mapping seed: k:691_c:107
+
+Processing Block Number: 21
+
+Seed initial size: 34
+Warning! Alignment extension (642) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2670_c:52
+Mapping seed: k:2670_c:52
+
+Processing Block Number: 22
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:31_c:682
+Mapping seed: k:31_c:682
+
+Processing Block Number: 23
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:5259_c:36
+Mapping seed: k:5259_c:36
+
+Processing Block Number: 24
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:23_c:731
+Mapping seed: k:23_c:731
+
+Processing Block Number: 25
+
+Seed initial size: 34
+Warning! Alignment extension (642) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:116_c:368
+Mapping seed: k:116_c:368
+
+Processing Block Number: 26
+
+Seed initial size: 34
+Warning! Alignment extension (645) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:26_c:707
+Mapping seed: k:26_c:707
+
+Processing Block Number: 27
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:2009_c:60
+Mapping seed: k:2009_c:60
+
+Processing Block Number: 28
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2557_c:53
+Mapping seed: k:2557_c:53
+
+Processing Block Number: 29
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:57_c:567
+Mapping seed: k:57_c:567
+
+Processing Block Number: 30
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:2414_c:54
+Mapping seed: k:2414_c:54
+
+Processing Block Number: 31
+
+Seed initial size: 34
+Warning! Alignment extension (642) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:5208_c:37
+Mapping seed: k:5208_c:37
+
+Processing Block Number: 32
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:5647_c:35
+Mapping seed: k:5647_c:35
+
+Processing Block Number: 33
+
+Seed initial size: 34
+Warning! Alignment extension (645) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:35_c:646
+Mapping seed: k:35_c:646
+
+Processing Block Number: 34
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:113_c:375
+Mapping seed: k:113_c:375
+
+Processing Block Number: 35
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:5480_c:35
+Mapping seed: k:5480_c:35
+
+Processing Block Number: 36
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:69_c:545
+Mapping seed: k:69_c:545
+
+Processing Block Number: 37
+
+Seed initial size: 34
+Warning! Alignment extension (642) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:18_c:783
+Mapping seed: k:18_c:783
+
+Processing Block Number: 38
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:5495_c:35
+Mapping seed: k:5495_c:35
+
+Processing Block Number: 39
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:4896_c:38
+Mapping seed: k:4896_c:38
+
+Processing Block Number: 40
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2407_c:54
+Mapping seed: k:2407_c:54
+
+Processing Block Number: 41
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2235_c:56
+Mapping seed: k:2235_c:56
+
+Processing Block Number: 42
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2090_c:58
+Mapping seed: k:2090_c:58
+
+Processing Block Number: 43
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2846_c:50
+Mapping seed: k:2846_c:50
+
+Processing Block Number: 44
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:27_c:701
+Mapping seed: k:27_c:701
+
+Processing Block Number: 45
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:2549_c:53
+Mapping seed: k:2549_c:53
+
+Processing Block Number: 46
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:1022_c:87
+Mapping seed: k:1022_c:87
+
+Processing Block Number: 47
+
+Seed initial size: 34
+Warning! Alignment extension (642) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2614_c:52
+Mapping seed: k:2614_c:52
+
+Processing Block Number: 48
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:67_c:550
+Mapping seed: k:67_c:550
+
+Processing Block Number: 49
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:1857_c:62
+Mapping seed: k:1857_c:62
+
+Processing Block Number: 50
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:3792_c:44
+Mapping seed: k:3792_c:44
+
+Processing Block Number: 51
+
+Seed initial size: 34
+Warning! Alignment extension (645) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:5582_c:35
+Mapping seed: k:5582_c:35
+
+Processing Block Number: 52
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:5428_c:36
+Mapping seed: k:5428_c:36
+
+Processing Block Number: 53
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2580_c:52
+Mapping seed: k:2580_c:52
+
+Processing Block Number: 54
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:5042_c:37
+Mapping seed: k:5042_c:37
+
+Processing Block Number: 55
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:81_c:483
+Mapping seed: k:81_c:483
+
+Processing Block Number: 56
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:5270_c:36
+Mapping seed: k:5270_c:36
+
+Processing Block Number: 57
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2012_c:59
+Mapping seed: k:2012_c:59
+
+Processing Block Number: 58
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:2682_c:52
+Mapping seed: k:2682_c:52
+
+Processing Block Number: 59
+
+Seed initial size: 34
+Warning! Alignment extension (644) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:5169_c:37
+Mapping seed: k:5169_c:37
+
+Processing Block Number: 60
+
+Seed initial size: 34
+Warning! Alignment extension (643) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:1540_c:71
+Mapping seed: k:1540_c:71
+
+Processing Block Number: 61
+
+Seed initial size: 34
+Warning! Alignment extension (642) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:1878_c:62
+Mapping seed: k:1878_c:62
+
+Processing Block Number: 62
+
+Seed initial size: 34
+Warning! Alignment extension (642) != expected (634). Attempting to locate seed in consensus.
+No exact matches for seed in consensus. Skipping seed.
+Working on target seed: k:5138_c:37Terminated
+[Mon Feb  9 15:16:32 2026]
+Error in rule block_extension:
+    jobid: 11
+    input: /home/jpereira/OEs/OE1.v2/Scripts/block_extension.py, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_1.tsv
+    output: /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Visuals/block_extension, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/blocks.fasta, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/.sentinel.block_extension
+    shell:
+        
+        python3 /home/jpereira/OEs/OE1.v2/Scripts/block_extension.py          --input-reads-fasta /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta          --input-seeds-tsv /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/cluster_1.tsv          --params-threads 40          --params-min-hits 30          --params-max-aln-extension 3000          --params-seed-map-coverage-threshold 0.8          --params-window-radius 15          --params-signal-threshold 0.12          --params-aln-w-step-size 300          --params-try-mean-signal True          --params-mean-signal-threshold 0.08          --params-plot True          --output-data-dir /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension          --output-vis-dir /home/jpereira/OEs/Results/OE1/toxoBrasil03/Visuals/block_extension 
+         
+        touch /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/.sentinel.block_extension
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Removing output files of failed job block_extension since they might be corrupted:
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Visuals/block_extension, /home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/blocks.fasta
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2026-02-09T092943.625388.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
+
+Final Files:
+
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/filter_sizes/reads.size_filtered.fasta
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/join_cont_refs/join_crefs.fastq
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/map_contamination/query_x_ref-contamination.paf
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decontamination/decont.fasta
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/check_gc/decont.low_gc.fasta
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/short_tandem_repeats.tsv
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/short_tandem_repeats/sequences_wo_str.fasta
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blast_to_abc/blast_map.abc
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/mcl_clustering/seq_distances.mci
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/make_seeds/.sentinel.make_seeds
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/block_extension/.sentinel.block_extension
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/decont_stats/summary.tsv
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/define_blocks/.sentinel.define_blocks
+/home/jpereira/OEs/Results/OE1/toxoBrasil03/Data/blastn_dotplot/dotplot_table.tsv

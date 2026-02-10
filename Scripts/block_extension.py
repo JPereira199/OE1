@@ -19,6 +19,7 @@ test = False
 if test:
     input_reads_fasta =  Path('/home/jpereira/OEs/Results/OE1/NamSeqs/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta')
     input_seeds_tsv = Path('/home/jpereira/OEs/Results/OE1/NamSeqs/Data/make_seeds/kmer30/cluster_1_kmers.tsv')
+    params_threads = 60
     params_min_hits                    = 30
     params_max_aln_extension           = 5000
     params_seed_map_coverage_threshold = 0.8
@@ -29,32 +30,32 @@ if test:
     params_mean_signal_threshold       = 0.06
     params_plot                        = True
     work_name = None
-    output_dir = Path('/home/jpereira/OEs/Results/OE1/NamSeqs/Data/seed_extension')
-    
+    #output_dir = Path('/home/jpereira/OEs/Results/OE1/NamSeqs/Data/seed_extension')
+    output_data_dir = Path('/home/jpereira/OEs/Results/OE1/NamSeqs/Data/seed_extension')
+    output_vis_dir = Path('/home/jpereira/OEs/Results/OE1/NamSeqs/Visuals/seed_extension')
 else:
     parser = argparse.ArgumentParser(description="Determine full recombinant-tract boundaries")
     parser.add_argument("--input-reads-fasta", required=True,help="FASTA or FASTQ file of sequencing reads to search")
     parser.add_argument("--input-seeds-tsv", required=True)
-    parser.add_argument("--params-min-hits", required=True)
-    parser.add_argument("--params-max-aln-extension", required=True)
+    parser.add_argument("--params-threads", type=int, default=20)
+    parser.add_argument("--params-min-hits", type=int, default=30)
+    parser.add_argument("--params-max-aln-extension", type=int, default=3000)
     parser.add_argument("--params-seed-map-coverage-threshold", type=float, default=0.8,help="Fraction of reads that must cover an MSA column to be valid")
-    parser.add_argument("--params-window-radius", type=float, default=15)
+    parser.add_argument("--params-window-radius", type=int, default=15)
     parser.add_argument("--params-signal-threshold", type=float, default=0.1)
-    parser.add_argument("--params-aln-w-step-size", type=float, default=300)
+    parser.add_argument("--params-aln-w-step-size", type=int, default=300)
     parser.add_argument("--params-try-mean-signal", type=bool, default=True)
     parser.add_argument("--params-mean-signal-threshold", type=float, default=0.06)
     parser.add_argument("--params-plot", type=bool, default=True)
     parser.add_argument("--work-name", type=str, default=None)
-    parser.add_argument("--output-dir", type=str, required=True)
+    parser.add_argument("--output-data-dir", type=str, required=True)
+    parser.add_argument("--output-vis-dir", type=str, required=True)
 
     args = parser.parse_args()
     
-    input_fragments_fasta = args.input_fragment_fasta
-    input_reads_fasta = args.input_reads_fasta
-    params_coverage_threshold = args.params_coverage_threshold
-    output_dir = args.output_dir
-    input_reads_fasta                  = args.input_reads_fasta
-    input_seeds_tsv                    = args.input_seeds_tsv
+    input_reads_fasta                  = Path(args.input_reads_fasta)
+    input_seeds_tsv                    = Path(args.input_seeds_tsv)
+    params_threads                     = args.params_threads
     params_min_hits                    = args.params_min_hits
     params_max_aln_extension           = args.params_max_aln_extension
     params_seed_map_coverage_threshold = args.params_seed_map_coverage_threshold
@@ -65,13 +66,15 @@ else:
     params_mean_signal_threshold       = args.params_mean_signal_threshold
     params_plot                        = args.params_plot
     work_name                          = args.work_name
-    output_dir                         = args.output_dir
-
+    output_data_dir                    = Path(args.output_data_dir)
+    output_vis_dir                     = Path(args.output_vis_dir)
 
 if work_name:
-    output_dir = output_dir / work_name
+    output_data_dir = output_data_dir / work_name
+    output_vis_dir = output_vis_dir / work_name
 
-output_dir.mkdir(exist_ok=True, parents=True)
+output_dir = output_data_dir
+output_data_dir.mkdir(exist_ok=True, parents=True)
 
 
 #########################################################################
@@ -126,7 +129,8 @@ seeds_df = pd.DataFrame({
 })
 
 results = extend_seeds_to_blocks(
-    output_dir=output_dir,
+    output_data_dir=output_data_dir,
+    output_vis_dir=output_vis_dir,
     seeds_df=seeds_df,
     seeds_hits_df=seeds_hits_df,
     blast_df=blast_df,
@@ -142,7 +146,7 @@ results = extend_seeds_to_blocks(
     params_max_aln_extension=params_max_aln_extension,
     params_seed_map_coverage_threshold=params_seed_map_coverage_threshold,
     # optional overrides:
-    threads=10, max_iter=100, gap_open=1.0, gap_extend=0.1, make_plots=True,
+    threads=params_threads, max_iter=100, gap_open=1.0, gap_extend=0.1, make_plots=True,
 )
 print("Blocks FASTA:", results["blocks_fasta"])
 print("Mapped seeds:", len(results["mapped_seeds"]))

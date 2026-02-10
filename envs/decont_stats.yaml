@@ -1,0 +1,12 @@
+name: nam_block_coverage
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.10
+  - blast
+  - pandas
+  - numpy
+  - biopython
+  - matplotlib
+  - seaborn

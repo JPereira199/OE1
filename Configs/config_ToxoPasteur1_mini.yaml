@@ -1,0 +1,76 @@
+
+query_sequences.Path : /home/jpereira/OEs/OE1.v2/toxo_reads/test_reads/toxo1.trimmedReads_mini.fasta
+cont_references.Folder : /home/jpereira/OEs/OE1.v2/cont_refs
+
+Results.Folder : /home/jpereira/OEs/Results/OE1/test/ToxoPasteur1_mini
+
+validation.sequence_blocks: /home/jpereira/OEs/Blocks_Namasivayam_without_p.fa
+
+filter_sizes.rule : True
+filter_sizes.min_read_length: 1000
+
+clean_n_filter.rule: True
+clean_n_filter.threads: 10
+clean_n_filter.min_read_length: 1000
+clean_n_filter.min_mean_quality: 10
+
+join_cont_refs.rule : True
+
+map_contamination.rule: True
+map_contamination.threads: 30
+
+
+discard_contamination.rule: True
+#discard_contamination.min_coverage:  70 # Convert to an optional adecontamintation mode
+discard_contamination.max_de : 0.20
+discard_contamination.min_query_coverage : 0.80
+discard_contamination.min_alignment_length : 1200
+
+GC_check.rule: True
+GC_check.max_GC : 40
+
+find_str.rule: True
+
+discard_str.rule: True
+discard_str.tandem_coverage: 0.50
+
+#TODO:
+# Takes the decontaminated sequences and checks wich one are covered
+# by diferent target of the target recombiant sequence.
+# All sequence with at leas a 50% of coverage are conserved
+fragmet_coverage.rule: True
+
+blast_to_abc.rule: True
+blast_to_abc.min_aln_identity: 95
+blast_to_abc.min_aln_length: 50
+blast_to_abc.min_blast_word_size: 20
+blast_to_abc.threads: 60
+
+mcl_clustering.rule: True
+mcl_clustering.inflation: 1.4
+
+decont_stats.rule: True
+decont_stats.word_size: 11
+decont_stats.min_pident: 90.0
+decont_stats.nam_threshold: 0.50
+decont_stats.threads: 30
+
+# Make Seeds rule
+make_seeds.rule: True
+make_seeds.min_fasta_size: 35
+make_seeds.kmer_size: 35
+make_seeds.min_kmer_counts: 35
+make_seeds.threads: 10
+
+# Block Extension rule
+block_extension.rule: False
+block_extension.min_hits: 30
+block_extension.max_aln_extension: 5000
+block_extension.seed_map_coverage_threshold: 0.8
+block_extension.window_radius: 15
+block_extension.signal_threshold: 0.12
+block_extension.aln_w_step_size: 300
+block_extension.try_mean_signal: True
+block_extension.mean_signal_threshold: 0.08
+block_extension.plot: True
+block_extension.threads: 60

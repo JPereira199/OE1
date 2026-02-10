@@ -1,7 +1,6 @@
 
 query_sequences.Path : /home/jpereira/OEs/OE1.v2/toxo_reads/toxo1.trimmedReads.fasta
 cont_references.Folder : /home/jpereira/OEs/OE1.v2/cont_refs
-
 Results.Folder : /home/jpereira/OEs/Results/OE1/ToxoPasteur1
 
 validation.sequence_blocks: /home/jpereira/OEs/Blocks_Namasivayam_without_p.fa
@@ -39,6 +38,11 @@ blast_to_abc.threads: 60
 
 mcl_clustering.rule: True
 mcl_clustering.inflation: 1.4
+
+decont_stats.rule: True
+decont_stats.word_size: 11
+decont_stats.min_pident: 90.0
+decont_stats.nam_threshold: 0.50
 
 # Make Seeds rule
 make_seeds.rule: False

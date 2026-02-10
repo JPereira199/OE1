@@ -14,7 +14,7 @@ map_contamination.rule: True
 map_contamination.threads: 30
 
 discard_contamination.rule: True
-discard_contamination.min_coverage:  90
+#discard_contamination.min_coverage:  90
 
 GC_check.rule: True
 GC_check.max_GC : 40

@@ -583,7 +583,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def blastn_dotplot(
-    work_name: str,
     fasta1: str,
     fasta2: str,
     output_base_dir: str,
@@ -591,6 +590,8 @@ def blastn_dotplot(
     qnames: bool = False,
     snames: bool = False,
     annot_size: float = 12,
+    title: str | None = "Blastn dotplot",
+    work_name: str | None = None,
 ) -> pd.DataFrame:
     """
     Run two BLASTn searches (auto vs. auto, nam vs. auto), load results,
@@ -613,8 +614,11 @@ def blastn_dotplot(
     """
     # Prepare output paths
     base = Path(output_base_dir)
-    workdir = base / work_name
-    
+    if work_name:
+        workdir = base / work_name
+    else:
+        workdir = base
+        
     workdir.mkdir(exist_ok=True, parents=True)
     blast_tsv  = workdir / f"blastn.fasta1_vs_fasta2.tsv"
 
@@ -734,7 +738,7 @@ def blastn_dotplot(
     # Adjust axis labels with padding
     ax.set_xlabel('Query Sequence', labelpad=0)
     ax.set_ylabel('Subject Sequence Position')
-    ax.set_title(f'Dot Plot of BLASTN Alignments: {work_name}')
+    ax.set_title(f'Dot Plot of BLASTN Alignments: {title}')
     plt.tight_layout()
     plt.savefig( workdir / 'dotplot.svg')
     
