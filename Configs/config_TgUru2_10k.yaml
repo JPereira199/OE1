@@ -1,12 +1,18 @@
-query_sequences.Path : /home/jpereira/OEs/OE1.v2/toxo_reads/toxo1.trimmedReads.fasta
+query_sequences.Path : /home/jpereira/OEs/OE1.v2/toxo_reads/test_reads/SRR36511105_10k.fastq.gz
 cont_references.Folder : /home/jpereira/OEs/OE1.v2/cont_refs
 
-Results.Folder : /home/jpereira/OEs/Results/OE1/test/ToxoPasteur1_full
+Results.Folder : /home/jpereira/OEs/Results/OE1/test/TgUru2_10k
 
 validation.sequence_blocks: /home/jpereira/OEs/Blocks_Namasivayam_without_p.fa
 
-filter_sizes.rule : True
+filter_sizes.rule : False
 filter_sizes.min_read_length: 1000
+
+clean_n_filter.rule: True
+clean_n_filter.min_read_length: 1200
+clean_n_filter.min_mean_quality: 10
+clean_n_filter.threads: 10
+
 
 join_cont_refs.rule : True
 
@@ -15,8 +21,8 @@ map_contamination.threads: 30
 
 discard_contamination.rule: True
 #discard_contamination.min_coverage:  70
-discard_contamination.max_de : 0.20
-discard_contamination.min_query_coverage : 0.80
+discard_contamination.max_de : 0.25
+discard_contamination.min_query_coverage : 0.75
 discard_contamination.min_alignment_length : 1200
 
 GC_check.rule: True
@@ -34,7 +40,7 @@ discard_str.tandem_coverage: 0.50
 fragmet_coverage.rule: True
 
 blast_to_abc.rule: True
-blast_to_abc.min_aln_identity: 95
+blast_to_abc.min_aln_identity: 75
 blast_to_abc.min_aln_length: 50
 blast_to_abc.min_blast_word_size: 20
 blast_to_abc.threads: 60
@@ -44,7 +50,7 @@ mcl_clustering.inflation: 1.4
 
 decont_stats.rule: True
 decont_stats.word_size: 11
-decont_stats.min_pident: 75.0
+decont_stats.min_pident: 70.0
 decont_stats.nam_threshold: 0.50
 decont_stats.threads: 30
 
@@ -79,7 +85,7 @@ define_blocks.select_internals_alns: False # Must be always 0 when you are worki
 
 # BLASTN dotplot + unmapped blocks
 blastn_dotplot.rule: True
-blastn_dotplot.title: ToxoPasteur_AutoBl_vs_Nam
+blastn_dotplot.title: ToxoUru2_10k_AutoBl_vs_Nam
 blastn_dotplot.word_size: 15
 blastn_dotplot.qnames: true      # show query names
 blastn_dotplot.snames: true      # show subject names

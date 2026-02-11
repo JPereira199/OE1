@@ -29,7 +29,7 @@ DOTPLOT_D = "blastn_dotplot"
 
 
 task = {
-    'filter_sizes.rule'             : (D_PATH, FILTERS_D, 'reads.size_filtered.fasta'),
+    #'filter_sizes.rule'             : (D_PATH, FILTERS_D, 'reads.size_filtered.fasta'),
     'clean_n_filter.rule'           : (D_PATH, CLEAN_N_FILTER_D, 'reads.size_filtered.fasta'),
     'join_cont_refs.rule'           : (D_PATH, JOIN_CREFS_D, 'join_crefs.fastq'),
     'map_contamination.rule'        : (D_PATH, MAPC_D, 'query_x_ref-contamination.paf'),
@@ -63,7 +63,7 @@ rule all:
 
 rule clean_n_filter:
     input:
-        reads = config["query_sequences.Path"]
+        reads = config["query_sequences.Path"],
         clean_n_filter_py = os.path.join(S_PATH, "clean_n_filter.py")
     output:
         filtered_fasta = os.path.join(D_PATH, "clean_n_filter", "reads.size_filtered.fasta"),
@@ -90,34 +90,35 @@ rule clean_n_filter:
         python {input.clean_n_filter_py} \
           --input {input.reads} \
           --min_len {params.min_len} \
-          --min_q {params.min_q} \
+          --min_mean_q {params.min_q} \
+          --threads {threads} \
           --out_fasta {output.filtered_fasta} \
           --out_fig {output.fig} \
           > {log} 2>&1
         """
    
 
-rule filter_sizes:
-    input: 
-        fasta = config['query_sequences.Path'],
-        fasta_sizes = os.path.join(S_PATH, 'fasta_sizes.py')
-    params:
-        min_read_length = config['filter_sizes.min_read_length']
-    output: 
-        hist_fig = os.path.join(V_PATH, FILTERS_D, 'hist.read_lengths.pdf' ),
-        filtered_fasta = os.path.join(*task['filter_sizes.rule'])
-    message: 
-        """
-        Discard any sequences from a query fasta file with a size below {params} nucleotides 
-        """
-    shell:
-        """
-        python3 "{input.fasta_sizes}" \
-         "{input.fasta}" \
-         "{params.min_read_length}" \
-         "{output.hist_fig}" \
-         "{output.filtered_fasta}"
-        """
+# rule filter_sizes:
+#     input: 
+#         fasta = config['query_sequences.Path'],
+#         fasta_sizes = os.path.join(S_PATH, 'fasta_sizes.py')
+#     params:
+#         min_read_length = config.get('filter_sizes.min_read_length', 1000)
+#     output: 
+#         hist_fig = os.path.join(V_PATH, FILTERS_D, 'hist.read_lengths.pdf' ),
+#         filtered_fasta = os.path.join(*task['filter_sizes.rule'])
+#     message: 
+#         """
+#         Discard any sequences from a query fasta file with a size below {params} nucleotides 
+#         """
+#     shell:
+#         """
+#         python3 "{input.fasta_sizes}" \
+#          "{input.fasta}" \
+#          "{params.min_read_length}" \
+#          "{output.hist_fig}" \
+#          "{output.filtered_fasta}"
+#         """
 
 rule join_cont_refs:
     input:
@@ -170,7 +171,7 @@ rule map_contamination:
 rule discard_contamination:
     input:
         discard_contamination_py = os.path.join(S_PATH, "discard_contamination2.py"),
-        filtered_fasta = rules.filter_sizes.output.filtered_fasta,
+        filtered_fasta = rules.clean_n_filter.output.filtered_fasta,
         aligns_paf = rules.map_contamination.output.aligns_paf
     params:
         min_alignment_length = config.get("discard_contamination.min_alignment_length", 700),
@@ -246,11 +247,43 @@ rule check_GC:
         rm $tmp_high_gc
 
         # Step 6: Write stats to file
-        echo -e "file_name\tnum_seqs\tavg_gc_content\tmean_gc_content\tstd_deviation" > {output.gc_stats}
-        echo -e "$(basename {input.decont_fasta})\t$input_num\t$input_avg\t$input_avg\t$input_std" >> {output.gc_stats}
-        echo -e "$(basename {output.decont_low_gc_fasta})\t$low_num\t$low_avg\t$low_avg\t$low_std" >> {output.gc_stats}
-        echo -e "$(basename {output.decont_high_gc_fasta})\t$high_num\t$high_avg\t$high_avg\t$high_std" >> {output.gc_stats}
+        echo -e "file_name\\tnum_seqs\\tavg_gc_content\\tmean_gc_content\\tstd_deviation" > {output.gc_stats}
+        echo -e "$(basename {input.decont_fasta})\\t$input_num\\t$input_avg\\t$input_avg\\t$input_std" >> {output.gc_stats}
+        echo -e "$(basename {output.decont_low_gc_fasta})\\t$low_num\\t$low_avg\\t$low_avg\\t$low_std" >> {output.gc_stats}
+        echo -e "$(basename {output.decont_high_gc_fasta})\\t$high_num\\t$high_avg\\t$high_avg\\t$high_std" >> {output.gc_stats}
         """
+
+# rule find_str:
+#     input:
+#         decont_low_gc_fasta=rules.check_GC.output.decont_low_gc_fasta,
+#         trf_script=os.path.join(S_PATH, "trf")
+#     params:
+#         trf_params="2 7 7 80 10 50 2000"
+#     output:
+#         str_table=os.path.join(D_PATH, SREPEATS, 'short_tandem_repeats.tsv')
+#     shell:
+#         """
+#         mkdir -p $(dirname {output})
+#         cd $(dirname {output})
+#         {input.trf_script} {input.decont_low_gc_fasta} {params.trf_params} -h -d > log.trf 2>&1 || true
+#         ls
+
+#         trf_params_name=$(echo "{params.trf_params}" | sed 's/ /./g')
+#         input_fasta_name=$(basename {input.decont_low_gc_fasta})
+
+#         if [ -s "$input_fasta_name.$trf_params_name.dat" ]; then
+#             tail -n +6 "$input_fasta_name.$trf_params_name.dat" | \
+#             grep -vE '^$|Parameters' | \
+#             awk 'BEGIN{{RS="Sequence: "; FS="\\n"; OFS="\\t"}} ($2 != "" ){{print $0}}' | \
+#             awk 'BEGIN{{RS="\\n\\n" ; FS="\\n"}} {{for(i=2;i<=NF;i++) printf("%s %s\\n", $1, $i)}}' | \
+#             awk 'BEGIN{{OFS="\\t" ; print "seqid", "rstart", "rend", "period_size", "copy_number", "consensus_size", "percent_matches", "percent_indels", "score", "A", "C", "G", "T", "entropy(0-2)", "repeat_sequence"}} {{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15}}' > {output}
+
+#         else
+#             echo -e "seqid\\trstart\\trend\\tperiod_size\\tcopy_number\\tconsensus_size\\tpercent_matches\\tpercent_indels\\tscore\\tA\\tC\\tG\\tT\\tentropy(0-2)\\trepeat_sequence" > {output}
+#         fi
+
+#         """
+
 
 rule find_str:
     input:
@@ -259,28 +292,63 @@ rule find_str:
     params:
         trf_params="2 7 7 80 10 50 2000"
     output:
-        str_table=os.path.join(D_PATH, SREPEATS, 'short_tandem_repeats.tsv')
+        str_table=os.path.join(D_PATH, SREPEATS, "short_tandem_repeats.tsv")
     shell:
         """
-        mkdir -p $(dirname {output})
-        cd $(dirname {output})
-        {input.trf_script} {input.decont_low_gc_fasta} {params.trf_params} -h -d > log.trf 2>&1 || true
-        ls
+        set -euo pipefail
 
-        trf_params_name=$(echo "{params.trf_params}" | sed 's/ /./g')
-        input_fasta_name=$(basename {input.decont_low_gc_fasta})
+        outdir="$(dirname "{output.str_table}")"
+        mkdir -p "$outdir"
+        cd "$outdir"
 
-        if [ -s "$input_fasta_name.$trf_params_name.dat" ]; then
-            tail -n +6 "$input_fasta_name.$trf_params_name.dat" | \
-            grep -vE '^$|Parameters' | \
-            awk 'BEGIN{{RS="Sequence: "; FS="\\n"; OFS="\\t"}} ($2 != "" ){{print $0}}' | \
-            awk 'BEGIN{{RS="\\n\\n" ; FS="\\n"}} {{for(i=2;i<=NF;i++) printf("%s %s\\n", $1, $i)}}' | \
-            awk 'BEGIN{{OFS="\\t" ; print "seqid", "rstart", "rend", "period_size", "copy_number", "consensus_size", "percent_matches", "percent_indels", "score", "A", "C", "G", "T", "entropy(0-2)", "repeat_sequence"}} {{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15}}' > {output}
+        # Run TRF (it returns exit code 1 even on success, so don't fail the rule).
+        "{input.trf_script}" "{input.decont_low_gc_fasta}" {params.trf_params} -h -d > log.trf 2>&1 || true
 
+        trf_params_name="$(printf "%s" "{params.trf_params}" | sed 's/ /./g')"
+        input_fasta_name="$(basename "{input.decont_low_gc_fasta}")"
+        dat_file="${{input_fasta_name}}.${{trf_params_name}}.dat"
+
+        header=$'seqid\\trstart\\trend\\tperiod_size\\tcopy_number\\tconsensus_size\\tpercent_matches\\tpercent_indels\\tscore\\tA\\tC\\tG\\tT\\tentropy(0-2)\trepeat_sequence'
+
+        if [ -s "$dat_file" ]; then
+            tail -n +6 "$dat_file" \
+              | grep -vE '^$|Parameters' \
+              | awk '
+                    BEGIN {{ RS="Sequence: "; FS="\\n" }}
+                    $2 != "" {{ print $0 }}
+                ' \
+              | awk '
+                    BEGIN {{ RS="\\n\\n"; FS="\\n"; OFS="\\t" }}
+                    {{
+                      seqid = $1
+                      for (i = 2; i <= NF; i++) {{
+                        # IMPORTANT: join seqid and each TRF row with a TAB,
+                        # so seqid may contain spaces safely.
+                        print seqid, $i
+                      }}
+                    }}
+                ' \
+              | awk -F'\\t' -v OFS='\\t' -v header="$header" '
+                    BEGIN {{ print header }}
+                    {{
+                      # Field 1 is seqid; field 2 contains the TRF row (space-separated).
+                      # Split TRF row into its tokens.
+                      n = split($2, a, /[[:space:]]+/)
+
+                      # Print seqid + first 14 TRF tokens (total 15 columns including seqid).
+                      # TRF usually provides 14 tokens per repeat line, but we guard anyway.
+                      printf "%s", $1
+                      for (i = 1; i <= 14; i++) {{
+                        printf "%s%s", OFS, (i <= n ? a[i] : "")
+                      }}
+                      printf "\\n"
+                    }}
+                ' > "{output.str_table}"
         else
-            echo -e "seqid\\trstart\\trend\\tperiod_size\\tcopy_number\\tconsensus_size\\tpercent_matches\\tpercent_indels\\tscore\\tA\\tC\\tG\\tT\\tentropy(0-2)\\trepeat_sequence" > {output}
+            printf "%s\\n" "$header" > "{output.str_table}"
         fi
         """
+
 
 rule discard_str:
     input:
@@ -441,7 +509,7 @@ rule decont_stats:
           --min_pident {params.min_pident} \
           --nam_threshold {params.nam_threshold} \
           #--blast_utils_path {{input.blast_utils}} \
-          > {log} 2>&1
+          > {log} 2>&1 
         """
 
 

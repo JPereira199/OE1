@@ -1,0 +1,1729 @@
+Assuming unrestricted shared filesystem usage.
+host: frigobar
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 40
+Rules claiming more threads will be scaled down.
+Job stats:
+job                        count
+-----------------------  -------
+all                            1
+blast_to_abc                   1
+blastn_dotplot_unmapped        1
+block_extension                1
+check_GC                       1
+decont_stats                   1
+define_blocks                  1
+discard_contamination          1
+discard_str                    1
+find_str                       1
+make_seeds                     1
+mcl_clustering                 1
+total                         12
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Feb 10 23:23:47 2026]
+Job 4: 
+        Given a PAF alignment table, discard sequences from the filtered FASTA
+        that have a "good" mapping against any contamination references, based on:
+          - min alignment length
+          - max de
+          - min query coverage
+        
+Reason: Params have changed since last execution
+
+[Tue Feb 10 23:23:52 2026]
+Finished job 4.
+1 of 12 steps (8%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Feb 10 23:23:52 2026]
+localrule check_GC:
+    input: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decontamination/decont.fasta
+    output: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/input_gc_table.txt, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/decont.low_gc.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/decont.high_gc.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/gc_stats.tsv
+    jobid: 5
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decontamination/decont.fasta
+    resources: tmpdir=/home/jpereira/tmp
+
+[INFO][0m 60 patterns loaded from file
+[INFO][0m 231 patterns loaded from file
+[Tue Feb 10 23:23:56 2026]
+Finished job 5.
+2 of 12 steps (17%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Feb 10 23:23:56 2026]
+localrule find_str:
+    input: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/decont.low_gc.fasta, /home/jpereira/OEs/OE1.v2/Scripts/trf
+    output: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/short_tandem_repeats.tsv
+    jobid: 6
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/decont.low_gc.fasta
+    resources: tmpdir=/home/jpereira/tmp
+
+[Tue Feb 10 23:24:12 2026]
+Finished job 6.
+3 of 12 steps (25%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Feb 10 23:24:12 2026]
+localrule discard_str:
+    input: /home/jpereira/OEs/OE1.v2/Scripts/discard_str.py, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/decont.low_gc.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/short_tandem_repeats.tsv
+    output: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/short_tandem_repeats.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/repeats.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/filtered_str.tsv
+    jobid: 7
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/short_tandem_repeats.tsv, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/decont.low_gc.fasta
+    resources: tmpdir=/home/jpereira/tmp
+
+[Tue Feb 10 23:24:16 2026]
+Finished job 7.
+4 of 12 steps (33%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Feb 10 23:24:16 2026]
+localrule blast_to_abc:
+    input: /home/jpereira/OEs/OE1.v2/Scripts/blast_to_abc.py, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/sequences_wo_str.fasta
+    output: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/blastn.seqs_wo_str.inner.tsv, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/blast_map.abc, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/uninformative_sequences.fasta
+    jobid: 8
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/sequences_wo_str.fasta
+    threads: 40
+    resources: tmpdir=/home/jpereira/tmp
+
+
+
+Building a new DB, current time: 02/10/2026 23:24:21
+New DB name:   /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/decont_inner_db/sequences_wo_str.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/sequences_wo_str.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/decont_inner_db/sequences_wo_str.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 60 sequences in 0.0218952 seconds.
+
+
+/home/jpereira/OEs/OE1.v2/Scripts/blast_to_abc.py:95: DeprecationWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  total_coverage_qs = group_qs_df.apply(lambda x: blast.total_coverage_temp(x, use='subject')).reset_index(name='coverage_fraction')
+Warning output db directory already exist: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/decont_inner_db
+makeblastdb ran successfully.
+Running: blastn -query /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/sequences_wo_str.fasta -db /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/decont_inner_db/sequences_wo_str.fasta -out /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/blastn.seqs_wo_str.inner.tsv -num_threads 40 -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 20 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn ran successfully.
+[Tue Feb 10 23:59:35 2026]
+Finished job 8.
+5 of 12 steps (42%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Feb 10 23:59:35 2026]
+Job 9: 
+        Clusterize a set sequences with MCL using the total coverage between them.
+        
+Reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/blast_map.abc
+
+[mclIO] writing </home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/seq_distances.mci>
+..............................
+[mclIO] wrote native interchange 60x60 matrix with 2510 entries to stream </home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/seq_distances.mci>
+[mclIO] wrote 60 tab entries to stream </home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/seq_names.list>
+[mcxload] tab has 60 entries
+[mclIO] reading </home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/seq_distances.mci>
+..............................
+[mclIO] read native interchange 60x60 matrix with 2510 entries
+[mcl] pid 2646936
+ ite --------------------  chaos  time hom(avg,lo,hi) m-ie m-ex i-ex fmv
+  1  ....................   3.78  0.00 0.91/0.47/1.48 1.28 1.28 1.28  96
+  2  ....................   4.16  0.00 0.61/0.43/1.18 1.03 1.02 1.32  96
+  3  ....................   4.77  0.00 0.39/0.26/1.19 1.00 0.99 1.30  96
+  4  ....................   5.55  0.00 0.28/0.17/1.00 1.01 0.96 1.25  96
+  5  ....................   5.78  0.00 0.39/0.30/1.00 1.00 0.94 1.18  96
+  6  ....................   3.71  0.00 0.61/0.58/1.00 1.00 0.63 0.75  96
+  7  ....................   1.16  0.00 0.76/0.75/1.00 1.03 0.37 0.27  96
+  8  ....................   0.60  0.00 0.85/0.85/1.00 1.00 0.58 0.16  96
+  9  ....................   0.63  0.00 0.88/0.87/1.00 1.00 1.00 0.16  96
+ 10  ....................   0.52  0.00 0.84/0.84/1.00 1.00 0.72 0.11  96
+ 11  ....................   0.36  0.00 0.79/0.79/1.00 1.00 0.60 0.07  96
+ 12  ....................   0.25  0.00 0.77/0.76/1.00 0.99 0.67 0.05  96
+ 13  ....................   0.22  0.00 0.79/0.78/1.00 0.99 0.99 0.05   0
+ 14  ....................   0.15  0.00 0.86/0.85/1.00 0.99 0.99 0.05   0
+ 15  ....................   0.07  0.00 0.93/0.93/1.00 0.99 0.99 0.05   0
+ 16  ....................   0.02  0.00 0.98/0.98/1.00 0.99 0.99 0.05   0
+ 17  ....................   0.00  0.00 1.00/1.00/1.00 0.99 0.99 0.05   0
+ 18  ....................   0.00  0.00 1.00/1.00/1.00 0.99 0.99 0.05   0
+ 19  ....................   0.00  0.00 1.00/1.00/1.00 0.99 0.51 0.02   0
+[mcl] jury pruning marks: <99,99,99>, out of 100
+[mcl] jury pruning synopsis: <99.0 or perfect> (cf -scheme, -do log)
+[mclIO] writing </home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/out.seq_distances.mci.I14>
+..
+[mclIO] wrote native interchange 60x2 matrix with 60 entries to stream </home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/out.seq_distances.mci.I14>
+[mcl] 2 clusters found
+[mcl] output is in /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/out.seq_distances.mci.I14
+
+Please cite:
+    Stijn van Dongen, Graph Clustering Via a Discrete Uncoupling Process,
+    SIAM Journal on Matrix Analysis and Applications, 30(1):121-141, 2008.
+    ( http://link.aip.org/link/?SJMAEL/30/121/1 )
+[mclIO] reading </home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/out.seq_distances.mci.I14>
+..
+[mclIO] read native interchange 60x2 matrix with 60 entries
+mcxdump completed successfully. Output: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/dump.mci
+[Tue Feb 10 23:59:44 2026]
+Finished job 9.
+6 of 12 steps (50%) done
+Select jobs to execute...
+Execute 2 jobs...
+
+[Tue Feb 10 23:59:45 2026]
+localrule make_seeds:
+    input: /home/jpereira/OEs/OE1.v2/Scripts/make_seeds.py, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters
+    output: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds/cluster_1.tsv, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds/.sentinel.make_seeds
+    jobid: 10
+    reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters
+    threads: 10
+    resources: tmpdir=/home/jpereira/tmp
+
+
+[Tue Feb 10 23:59:45 2026]
+Job 12: 
+        Computing decontamination statistics and NAM-block coverage across pipeline steps.
+        Generating per-step coverage plots and a global summary barplot.
+        
+Reason: Input files updated by another job: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decontamination/decont.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/decont.low_gc.fasta
+
+Activating conda environment: .snakemake/conda/e1c96a6c773163e36077ead63b584610_
+java -ea -Xmx163146m -Xms163146m -cp /usr/local/bin/current/ jgi.KmerCountExact in=/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta k=35 threads=10 mincount=35 fastadump=f out=/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds/cluster_1.tsv overwrite=true
+Executing jgi.KmerCountExact [in=/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, k=35, threads=10, mincount=35, fastadump=f, out=/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds/cluster_1.tsv, overwrite=true]
+
+Set threads to 10
+Initial:
+Memory: max=171094m, total=171094m, free=171008m, used=86m
+
+Executing ukmer.KmerTableSetU [in=/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, k=35, threads=10, mincount=35, fastadump=f, out=/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds/cluster_1.tsv, overwrite=true]
+
+K was changed from 35 to 34
+Initial:
+Ways=31, initialSize=128000, prefilter=f, prealloc=f
+Memory: max=171094m, total=171094m, free=171008m, used=86m
+
+After table allocation:
+Memory: max=171094m, total=171094m, free=170907m, used=187m
+
+After loading:
+Memory: max=171094m, total=171094m, free=167535m, used=3559m
+
+Input:                      	58 reads 		300176 bases.
+
+For K=34
+Unique Kmers:               	240211
+Average Kmer Count:         	1.242
+Estimated Kmer Depth:       	0.434
+Estimated Read Depth:       	0.437
+
+Load Time:                  	2.643 seconds.
+Kmer Dump Time:             	0.370 seconds.
+❌ Skipping non-FASTA/Q file: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/.snakemake_timestamp
+⚠️ Skipping cluster_2.fasta: only 0 entries (min is 35)
+▶ Running: kmercountexact.sh in=/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta k=35 threads=10 mincount=35 fastadump=f out=/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds/cluster_1.tsv overwrite=true
+[Tue Feb 10 23:59:56 2026]
+Finished job 10.
+7 of 12 steps (58%) done
+Select jobs to execute...
+Waiting for more resources.
+
+
+Building a new DB, current time: 02/10/2026 23:59:58
+New DB name:   /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/01_Decontamination/blastdb/decont.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decontamination/decont.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/01_Decontamination/blastdb/decont.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 291 sequences in 0.0765159 seconds.
+
+
+
+
+Building a new DB, current time: 02/11/2026 00:00:02
+New DB name:   /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/02_GC_filter/blastdb/decont.low_gc.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/decont.low_gc.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/02_GC_filter/blastdb/decont.low_gc.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 60 sequences in 0.0523961 seconds.
+
+
+
+
+Building a new DB, current time: 02/11/2026 00:00:05
+New DB name:   /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/03_STR_filter/blastdb/sequences_wo_str.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/sequences_wo_str.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/03_STR_filter/blastdb/sequences_wo_str.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 60 sequences in 0.0570381 seconds.
+
+
+
+
+Building a new DB, current time: 02/11/2026 00:00:10
+New DB name:   /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/04_MCL_filter/blastdb/cluster_1.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/04_MCL_filter/blastdb/cluster_1.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 58 sequences in 0.015075 seconds.
+
+
+Warning output db directory already exist: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/01_Decontamination/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+Warning output db directory already exist: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/02_GC_filter/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+Warning output db directory already exist: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/03_STR_filter/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+Warning output db directory already exist: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/04_MCL_filter/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+[Wed Feb 11 00:00:21 2026]
+Finished job 12.
+8 of 12 steps (67%) done
+Execute 1 jobs...
+
+[Wed Feb 11 00:00:21 2026]
+localrule block_extension:
+    input: /home/jpereira/OEs/OE1.v2/Scripts/block_extension.py, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds/cluster_1.tsv
+    output: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Visuals/block_extension, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/blocks.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/.sentinel.block_extension
+    jobid: 11
+    reason: Missing output files: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/.sentinel.block_extension, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/blocks.fasta; Input files updated by another job: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds/cluster_1.tsv, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta
+    threads: 40
+    resources: tmpdir=/home/jpereira/tmp
+
+
+
+Building a new DB, current time: 02/11/2026 00:00:29
+New DB name:   /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/input_reads_db/cluster_1.fasta
+New DB title:  /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 58 sequences in 0.0182462 seconds.
+
+
+makeblastdb ran successfully.
+blastn ran successfully.
+Working on target seed: k:7_c:228
+Mapping seed: k:7_c:228
+
+Processing Block Number: 1
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:2_c:234
+Mapping seed: k:2_c:234
+
+Processing Block Number: 2
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:8_c:225
+Mapping seed: k:8_c:225
+
+Processing Block Number: 3
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:3_c:233
+Mapping seed: k:3_c:233
+
+Processing Block Number: 4
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:10_c:224
+Mapping seed: k:10_c:224
+
+Processing Block Number: 5
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:5_c:230
+Mapping seed: k:5_c:230
+
+Processing Block Number: 6
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:13_c:221
+Mapping seed: k:13_c:221
+
+Processing Block Number: 7
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:1_c:237
+Mapping seed: k:1_c:237
+
+Processing Block Number: 8
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:14_c:219
+Mapping seed: k:14_c:219
+
+Processing Block Number: 9
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:4_c:233
+Mapping seed: k:4_c:233
+
+Processing Block Number: 10
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:20_c:200
+Mapping seed: k:20_c:200
+
+Processing Block Number: 11
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:30_c:183
+Mapping seed: k:30_c:183
+
+Processing Block Number: 12
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:6_c:230
+Mapping seed: k:6_c:230
+
+Processing Block Number: 13
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:27_c:187
+Mapping seed: k:27_c:187
+
+Processing Block Number: 14
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:9_c:224
+Mapping seed: k:9_c:224
+
+Processing Block Number: 15
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:17_c:214
+Mapping seed: k:17_c:214
+
+Processing Block Number: 16
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:18_c:209
+Mapping seed: k:18_c:209
+
+Processing Block Number: 17
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:23_c:191
+Mapping seed: k:23_c:191
+
+Processing Block Number: 18
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:19_c:206
+Mapping seed: k:19_c:206
+
+Processing Block Number: 19
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:21_c:196
+Mapping seed: k:21_c:196
+
+Processing Block Number: 20
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:11_c:221
+Mapping seed: k:11_c:221
+
+Processing Block Number: 21
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:12_c:221
+Mapping seed: k:12_c:221
+
+Processing Block Number: 22
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:122_c:99
+Mapping seed: k:122_c:99
+
+Processing Block Number: 23
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:65_c:138
+Mapping seed: k:65_c:138
+
+Processing Block Number: 24
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:84_c:116
+Mapping seed: k:84_c:116
+
+Processing Block Number: 25
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:25_c:189
+Mapping seed: k:25_c:189
+
+Processing Block Number: 26
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:22_c:193
+Mapping seed: k:22_c:193
+
+Processing Block Number: 27
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:24_c:190
+Mapping seed: k:24_c:190
+
+Processing Block Number: 28
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:100_c:110
+Mapping seed: k:100_c:110
+
+Processing Block Number: 29
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:16_c:217
+Mapping seed: k:16_c:217
+
+Processing Block Number: 30
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:28_c:185
+Mapping seed: k:28_c:185
+
+Processing Block Number: 31
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:88_c:115
+Mapping seed: k:88_c:115
+
+Processing Block Number: 32
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:86_c:116
+Mapping seed: k:86_c:116
+
+Processing Block Number: 33
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:37_c:174
+Mapping seed: k:37_c:174
+
+Processing Block Number: 34
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:72_c:127
+Mapping seed: k:72_c:127
+
+Processing Block Number: 35
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:99_c:111
+Mapping seed: k:99_c:111
+
+Processing Block Number: 36
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:130_c:93
+Mapping seed: k:130_c:93
+
+Processing Block Number: 37
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:109_c:104
+Mapping seed: k:109_c:104
+
+Processing Block Number: 38
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:113_c:101
+Mapping seed: k:113_c:101
+
+Processing Block Number: 39
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:32_c:180
+Mapping seed: k:32_c:180
+
+Processing Block Number: 40
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:29_c:185
+Mapping seed: k:29_c:185
+
+Processing Block Number: 41
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:79_c:118
+Mapping seed: k:79_c:118
+
+Processing Block Number: 42
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:131_c:93
+Mapping seed: k:131_c:93
+
+Processing Block Number: 43
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:41_c:173
+Mapping seed: k:41_c:173
+
+Processing Block Number: 44
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:26_c:187
+Mapping seed: k:26_c:187
+
+Processing Block Number: 45
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:98_c:111
+Mapping seed: k:98_c:111
+
+Processing Block Number: 46
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:92_c:114
+Mapping seed: k:92_c:114
+
+Processing Block Number: 47
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:15_c:219
+Mapping seed: k:15_c:219
+
+Processing Block Number: 48
+
+Seed initial size: 34
+Warning! Alignment extension (642) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:83_c:116
+Mapping seed: k:83_c:116
+
+Processing Block Number: 49
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:111_c:103
+Mapping seed: k:111_c:103
+
+Processing Block Number: 50
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:81_c:117
+Mapping seed: k:81_c:117
+
+Processing Block Number: 51
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:97_c:111
+Mapping seed: k:97_c:111
+
+Processing Block Number: 52
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:103_c:108
+Mapping seed: k:103_c:108
+
+Processing Block Number: 53
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:50_c:167
+Mapping seed: k:50_c:167
+
+Processing Block Number: 54
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:43_c:171
+Mapping seed: k:43_c:171
+
+Processing Block Number: 55
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:87_c:115
+Mapping seed: k:87_c:115
+
+Processing Block Number: 56
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:39_c:173
+Mapping seed: k:39_c:173
+
+Processing Block Number: 57
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:85_c:116
+Mapping seed: k:85_c:116
+
+Processing Block Number: 58
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:31_c:180
+Mapping seed: k:31_c:180
+
+Processing Block Number: 59
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:52_c:161
+Mapping seed: k:52_c:161
+
+Processing Block Number: 60
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:42_c:172
+Mapping seed: k:42_c:172
+
+Processing Block Number: 61
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:46_c:170
+Mapping seed: k:46_c:170
+
+Processing Block Number: 62
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:106_c:107
+Mapping seed: k:106_c:107
+
+Processing Block Number: 63
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:63_c:146
+Mapping seed: k:63_c:146
+
+Processing Block Number: 64
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:120_c:99
+Mapping seed: k:120_c:99
+
+Processing Block Number: 65
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:57_c:154
+Mapping seed: k:57_c:154
+
+Processing Block Number: 66
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:33_c:180
+Mapping seed: k:33_c:180
+
+Processing Block Number: 67
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:68_c:131
+Mapping seed: k:68_c:131
+
+Processing Block Number: 68
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:34_c:177
+Mapping seed: k:34_c:177
+
+Processing Block Number: 69
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:66_c:134
+Mapping seed: k:66_c:134
+
+Processing Block Number: 70
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:44_c:171
+Mapping seed: k:44_c:171
+
+Processing Block Number: 71
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:119_c:100
+Mapping seed: k:119_c:100
+
+Processing Block Number: 72
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:67_c:132
+Mapping seed: k:67_c:132
+
+Processing Block Number: 73
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:40_c:173
+Mapping seed: k:40_c:173
+
+Processing Block Number: 74
+
+Seed initial size: 34
+Warning! Alignment extension (637) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:91_c:114
+Mapping seed: k:91_c:114
+
+Processing Block Number: 75
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:49_c:167
+Mapping seed: k:49_c:167
+
+Processing Block Number: 76
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:45_c:170
+Mapping seed: k:45_c:170
+
+Processing Block Number: 77
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:56_c:154
+Mapping seed: k:56_c:154
+
+Processing Block Number: 78
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:112_c:102
+Mapping seed: k:112_c:102
+
+Processing Block Number: 79
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:145_c:83
+Mapping seed: k:145_c:83
+
+Processing Block Number: 80
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:47_c:170
+Mapping seed: k:47_c:170
+
+Processing Block Number: 81
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:123_c:96
+Mapping seed: k:123_c:96
+
+Processing Block Number: 82
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:115_c:101
+Mapping seed: k:115_c:101
+
+Processing Block Number: 83
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:77_c:120
+Mapping seed: k:77_c:120
+
+Processing Block Number: 84
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:36_c:175
+Mapping seed: k:36_c:175
+
+Processing Block Number: 85
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:78_c:120
+Mapping seed: k:78_c:120
+
+Processing Block Number: 86
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:96_c:112
+Mapping seed: k:96_c:112
+
+Processing Block Number: 87
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:51_c:167
+Mapping seed: k:51_c:167
+
+Processing Block Number: 88
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:35_c:176
+Mapping seed: k:35_c:176
+
+Processing Block Number: 89
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:59_c:152
+Mapping seed: k:59_c:152
+
+Processing Block Number: 90
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:53_c:158
+Mapping seed: k:53_c:158
+
+Processing Block Number: 91
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:95_c:113
+Mapping seed: k:95_c:113
+
+Processing Block Number: 92
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:114_c:101
+Mapping seed: k:114_c:101
+
+Processing Block Number: 93
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:135_c:89
+Mapping seed: k:135_c:89
+
+Processing Block Number: 94
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:48_c:169
+Mapping seed: k:48_c:169
+
+Processing Block Number: 95
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:89_c:114
+Mapping seed: k:89_c:114
+
+Processing Block Number: 96
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:60_c:150
+Mapping seed: k:60_c:150
+
+Processing Block Number: 97
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:110_c:103
+Mapping seed: k:110_c:103
+
+Processing Block Number: 98
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:133_c:91
+Mapping seed: k:133_c:91
+
+Processing Block Number: 99
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:38_c:174
+Mapping seed: k:38_c:174
+
+Processing Block Number: 100
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:94_c:113
+Mapping seed: k:94_c:113
+
+Processing Block Number: 101
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:121_c:99
+Mapping seed: k:121_c:99
+
+Processing Block Number: 102
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:101_c:110
+Mapping seed: k:101_c:110
+
+Processing Block Number: 103
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:150_c:74
+Mapping seed: k:150_c:74
+
+Processing Block Number: 104
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:125_c:96
+Mapping seed: k:125_c:96
+
+Processing Block Number: 105
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:62_c:146
+Mapping seed: k:62_c:146
+
+Processing Block Number: 106
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:140_c:85
+Mapping seed: k:140_c:85
+
+Processing Block Number: 107
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:73_c:127
+Mapping seed: k:73_c:127
+
+Processing Block Number: 108
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:70_c:129
+Mapping seed: k:70_c:129
+
+Processing Block Number: 109
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:108_c:106
+Mapping seed: k:108_c:106
+
+Processing Block Number: 110
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:58_c:154
+Mapping seed: k:58_c:154
+
+Processing Block Number: 111
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:90_c:114
+Mapping seed: k:90_c:114
+
+Processing Block Number: 112
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:104_c:108
+Mapping seed: k:104_c:108
+
+Processing Block Number: 113
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:129_c:94
+Mapping seed: k:129_c:94
+
+Processing Block Number: 114
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:93_c:113
+Mapping seed: k:93_c:113
+
+Processing Block Number: 115
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:118_c:100
+Mapping seed: k:118_c:100
+
+Processing Block Number: 116
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:126_c:95
+Mapping seed: k:126_c:95
+
+Processing Block Number: 117
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:76_c:125
+Mapping seed: k:76_c:125
+
+Processing Block Number: 118
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:75_c:126
+Mapping seed: k:75_c:126
+
+Processing Block Number: 119
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:80_c:118
+Mapping seed: k:80_c:118
+
+Processing Block Number: 120
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:55_c:155
+Mapping seed: k:55_c:155
+
+Processing Block Number: 121
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:74_c:127
+Mapping seed: k:74_c:127
+
+Processing Block Number: 122
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:147_c:78
+Mapping seed: k:147_c:78
+
+Processing Block Number: 123
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:134_c:90
+Mapping seed: k:134_c:90
+
+Processing Block Number: 124
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:144_c:85
+Mapping seed: k:144_c:85
+
+Processing Block Number: 125
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:64_c:139
+Mapping seed: k:64_c:139
+
+Processing Block Number: 126
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:149_c:75
+Mapping seed: k:149_c:75
+
+Processing Block Number: 127
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:116_c:101
+Mapping seed: k:116_c:101
+
+Processing Block Number: 128
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:61_c:149
+Mapping seed: k:61_c:149
+
+Processing Block Number: 129
+
+Seed initial size: 34
+Warning! Alignment extension (641) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:54_c:156
+Mapping seed: k:54_c:156
+
+Processing Block Number: 130
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:136_c:89
+Mapping seed: k:136_c:89
+
+Processing Block Number: 131
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:152_c:67
+Mapping seed: k:152_c:67
+
+Processing Block Number: 132
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:117_c:100
+Mapping seed: k:117_c:100
+
+Processing Block Number: 133
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:146_c:79
+Mapping seed: k:146_c:79
+
+Processing Block Number: 134
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:148_c:76
+Mapping seed: k:148_c:76
+
+Processing Block Number: 135
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:165_c:39
+Mapping seed: k:165_c:39
+
+Processing Block Number: 136
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:151_c:73
+Mapping seed: k:151_c:73
+
+Processing Block Number: 137
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:160_c:49
+Mapping seed: k:160_c:49
+
+Processing Block Number: 138
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:137_c:89
+Mapping seed: k:137_c:89
+
+Processing Block Number: 139
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:132_c:93
+Mapping seed: k:132_c:93
+
+Processing Block Number: 140
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:82_c:117
+Mapping seed: k:82_c:117
+
+Processing Block Number: 141
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:107_c:107
+Mapping seed: k:107_c:107
+
+Processing Block Number: 142
+
+Seed initial size: 34
+Warning! Alignment extension (640) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:161_c:43
+Mapping seed: k:161_c:43
+
+Processing Block Number: 143
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:128_c:94
+Mapping seed: k:128_c:94
+
+Processing Block Number: 144
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:154_c:63
+Mapping seed: k:154_c:63
+
+Processing Block Number: 145
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:164_c:40
+Mapping seed: k:164_c:40
+
+Processing Block Number: 146
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:171_c:37
+Mapping seed: k:171_c:37
+
+Processing Block Number: 147
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:166_c:38
+Mapping seed: k:166_c:38
+
+Processing Block Number: 148
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:177_c:35
+Mapping seed: k:177_c:35
+
+Processing Block Number: 149
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:158_c:57
+Mapping seed: k:158_c:57
+
+Processing Block Number: 150
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:157_c:60
+Mapping seed: k:157_c:60
+
+Processing Block Number: 151
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:153_c:64
+Mapping seed: k:153_c:64
+
+Processing Block Number: 152
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:163_c:40
+Mapping seed: k:163_c:40
+
+Processing Block Number: 153
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:127_c:94
+Mapping seed: k:127_c:94
+
+Processing Block Number: 154
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:159_c:56
+Mapping seed: k:159_c:56
+
+Processing Block Number: 155
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:174_c:36
+Mapping seed: k:174_c:36
+
+Processing Block Number: 156
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:156_c:62
+Mapping seed: k:156_c:62
+
+Processing Block Number: 157
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:167_c:38
+Mapping seed: k:167_c:38
+
+Processing Block Number: 158
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:155_c:62
+Mapping seed: k:155_c:62
+
+Processing Block Number: 159
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:162_c:40
+Mapping seed: k:162_c:40
+
+Processing Block Number: 160
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:124_c:96
+Mapping seed: k:124_c:96
+
+Processing Block Number: 161
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:173_c:36
+Mapping seed: k:173_c:36
+
+Processing Block Number: 162
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:170_c:37
+Mapping seed: k:170_c:37
+
+Processing Block Number: 163
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:169_c:37
+Mapping seed: k:169_c:37
+
+Processing Block Number: 164
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:168_c:38
+Mapping seed: k:168_c:38
+
+Processing Block Number: 165
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:172_c:37
+Mapping seed: k:172_c:37
+
+Processing Block Number: 166
+
+Seed initial size: 34
+Warning! Alignment extension (638) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:175_c:36
+Mapping seed: k:175_c:36
+
+Processing Block Number: 167
+
+Seed initial size: 34
+Warning! Alignment extension (639) != expected (634). Attempting to locate seed in consensus.
+Multiple matches detected for the same seed. Skipping seed.
+Working on target seed: k:176_c:35
+Mapping seed: k:176_c:35
+
+Processing Block Number: 168
+
+Seed initial size: 34
+Warning! Alignment extension (326) != expected (634). Attempting to locate seed in consensus.
+
+Start signal Pos: 37
+Mean Start signal Pos: 52
+End signal Pos: 96
+Mean End signal Pos: 96
+
+Running: blastn -query /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/temp.seeds.fasta -subject /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/block-temp.fasta -out /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/temp.blast.seeds_fragment.tsv -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 10 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn_subject ran successfully.
+Blocks FASTA: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/blocks.fasta
+Mapped seeds: 1
+Blocks found: 1
+[Wed Feb 11 08:08:41 2026]
+Finished job 11.
+9 of 12 steps (75%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Feb 11 08:08:41 2026]
+Job 13: 
+        Defining blocks by reciprocal BLAST + iterative clustering (define_blocks).
+        Input: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/blocks.fasta
+        
+Reason: Missing output files: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks/.sentinel.define_blocks, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks/block_iterations/1/retrieve/regions.fasta; Input files updated by another job: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/.sentinel.block_extension, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/blocks.fasta
+
+[Wed Feb 11 08:08:43 2026]
+Error in rule define_blocks:
+    jobid: 13
+    input: /home/jpereira/OEs/OE1.v2/Scripts/define_blocks.py, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/blocks.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/.sentinel.block_extension
+    output: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks/blastn.infasta_reciprocal.tsv, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks/block_iterations/1/retrieve/regions.fasta, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks/.sentinel.define_blocks
+    log: /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Logs/define_blocks/define_blocks.log (check log file(s) for error details)
+    shell:
+        
+        set -euo pipefail
+        mkdir -p $(dirname /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Logs/define_blocks/define_blocks.log)
+
+        python3 /home/jpereira/OEs/OE1.v2/Scripts/define_blocks.py           --input-fasta /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/blocks.fasta           --param-min-instances 0           --param-threads 20           --params-cluster-identity 0.85           --params-cluster-coverage 0.85           --params-select-internals-alns False           --params-retrive-sinlge-aln False           --output-dir /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks           > /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Logs/define_blocks/define_blocks.log 2>&1
+
+        test -s /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks/blastn.infasta_reciprocal.tsv
+        touch /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks/.sentinel.define_blocks
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Removing output files of failed job define_blocks since they might be corrupted:
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks, /home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks/blastn.infasta_reciprocal.tsv
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2026-02-10T232331.933631.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
+
+Final Files:
+
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/clean_n_filter/reads.size_filtered.fasta
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/join_cont_refs/join_crefs.fastq
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/map_contamination/query_x_ref-contamination.paf
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decontamination/decont.fasta
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/check_gc/decont.low_gc.fasta
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/short_tandem_repeats.tsv
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/short_tandem_repeats/sequences_wo_str.fasta
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blast_to_abc/blast_map.abc
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/mcl_clustering/seq_distances.mci
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/make_seeds/.sentinel.make_seeds
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/block_extension/.sentinel.block_extension
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/decont_stats/summary.tsv
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/define_blocks/.sentinel.define_blocks
+/home/jpereira/OEs/Results/OE1/test/TgUru2_10k/Data/blastn_dotplot/dotplot_table.tsv

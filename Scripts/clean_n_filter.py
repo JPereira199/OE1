@@ -11,14 +11,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from Bio import SeqIO
+import shutil
+
+import gzip
+
+def open_text_maybe_gzip(path: Path):
+    return gzip.open(path, "rt") if path.suffix == ".gz" else path.open("r")
+
+def open_bin_maybe_gzip(path: Path):
+    return gzip.open(path, "rb") if path.suffix == ".gz" else path.open("rb")
 
 
 def detect_seq_format(path: Path) -> str:
     """
-    Detect FASTA vs FASTQ based on first non-empty character.
-    Returns: "fasta" or "fastq"
+    Detect FASTA vs FASTQ from the first non-empty line.
+    Works for .fa/.fasta/.fastq and .gz versions.
     """
-    with path.open("r") as fh:
+    with open_text_maybe_gzip(path) as fh:
         for line in fh:
             line = line.strip()
             if not line:
@@ -31,27 +40,69 @@ def detect_seq_format(path: Path) -> str:
     raise ValueError(f"Could not detect format (FASTA/FASTQ) from file header: {path}")
 
 
-def run_nanofilt_fastq(in_fastq: Path, out_fastq: Path, min_mean_q: float) -> None:
-    """
-    Supports both .fastq and .fastq.gz
-    """
-    if in_fastq.suffix == ".gz":
-        cmd = f"zcat {in_fastq} | NanoFilt -q {min_mean_q}"
-        p = subprocess.run(
-            cmd,
-            shell=True,
-            stdout=out_fastq.open("wb"),
-            stderr=subprocess.PIPE,
-        )
-    else:
-        cmd = ["NanoFilt", "-q", str(min_mean_q)]
-        with in_fastq.open("rb") as fin, out_fastq.open("wb") as fout:
-            p = subprocess.run(cmd, stdin=fin, stdout=fout, stderr=subprocess.PIPE)
 
-    if p.returncode != 0:
-        raise RuntimeError(
-            f"NanoFilt failed:\n{p.stderr.decode(errors='replace')}"
-        )
+def run_nanofilt_fastq(in_fastq: Path, out_fastq: Path, min_mean_q: float, threads: int = 1) -> None:
+    """
+    Supports .fastq and .fastq.gz.
+    Note: NanoFilt is stream-based; threads is kept for interface consistency but not used.
+    """
+    nanofilt_cmd = ["NanoFilt", "-q", str(min_mean_q)]
+
+    out_fastq.parent.mkdir(parents=True, exist_ok=True)
+
+    # Pick a decompressor that exists
+    pigz = shutil.which("pigz")
+    gzip_bin = shutil.which("gzip")
+    decompressor = None
+    if in_fastq.suffix == ".gz":
+        if pigz:
+            decompressor = [pigz, "-dc", str(in_fastq)]
+        elif gzip_bin:
+            decompressor = [gzip_bin, "-dc", str(in_fastq)]
+        else:
+            raise RuntimeError("Neither 'pigz' nor 'gzip' found in PATH; cannot decompress .gz input.")
+
+    with out_fastq.open("wb") as fout:
+        if decompressor:
+            # decompressor | NanoFilt > out_fastq
+            p1 = subprocess.Popen(decompressor, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            p2 = subprocess.Popen(nanofilt_cmd, stdin=p1.stdout, stdout=fout, stderr=subprocess.PIPE)
+
+            assert p1.stdout is not None
+            p1.stdout.close()
+
+            err2 = p2.communicate()[1]
+            err1 = p1.communicate()[1]
+
+            if p1.returncode != 0:
+                raise RuntimeError(f"Decompression failed:\n{err1.decode(errors='replace')}")
+            if p2.returncode != 0:
+                raise RuntimeError(f"NanoFilt failed:\n{err2.decode(errors='replace')}")
+        else:
+            # Plain FASTQ
+            with in_fastq.open("rb") as fin:
+                p = subprocess.run(nanofilt_cmd, stdin=fin, stdout=fout, stderr=subprocess.PIPE)
+            if p.returncode != 0:
+                raise RuntimeError(f"NanoFilt failed:\n{p.stderr.decode(errors='replace')}")
+
+
+def length_filter_fasta(in_fasta: Path, out_fasta: Path, min_len: int) -> tuple[list[int], list[int]]:
+    lens_before: list[int] = []
+    lens_after: list[int] = []
+
+    out_fasta.parent.mkdir(parents=True, exist_ok=True)
+
+    with open_text_maybe_gzip(in_fasta) as fin, out_fasta.open("w") as fout:
+        for rec in SeqIO.parse(fin, "fasta"):
+            L = len(rec.seq)
+            lens_before.append(L)
+            if L >= min_len:
+                lens_after.append(L)
+                SeqIO.write(rec, fout, "fasta")
+
+    return lens_before, lens_after
+
+
 
 
 
@@ -62,26 +113,6 @@ def run_seqkit_fq2fa(in_fastq: Path, out_fasta: Path) -> None:
         raise RuntimeError(f"seqkit fq2fa failed:\n{p.stderr.decode(errors='replace')}")
     out_fasta.write_bytes(p.stdout)
 
-
-def length_filter_fasta(in_fasta: Path, out_fasta: Path, min_len: int) -> tuple[list[int], list[int]]:
-    """
-    Returns (lens_before, lens_after), where "before" are all sequences in in_fasta
-    and "after" are those passing min_len written to out_fasta.
-    """
-    lens_before: list[int] = []
-    lens_after: list[int] = []
-
-    out_fasta.parent.mkdir(parents=True, exist_ok=True)
-
-    with in_fasta.open("r") as fin, out_fasta.open("w") as fout:
-        for rec in SeqIO.parse(fin, "fasta"):
-            L = len(rec.seq)
-            lens_before.append(L)
-            if L >= min_len:
-                lens_after.append(L)
-                SeqIO.write(rec, fout, "fasta")
-
-    return lens_before, lens_after
 
 
 def add_annotations(data: list[int], ax) -> None:
@@ -138,7 +169,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--out_fasta", required=True, type=Path, help="Output filtered FASTA.")
 
     # Only used if input is FASTQ
-    p.add_argument("--min_mean_q", type=float, default=0.0, help="Minimum mean read quality (FASTQ only).")
+    p.add_argument("--min_mean_q", type=int, default=10, help="Minimum mean read quality (FASTQ only).")
     p.add_argument("--threads", type=int, default=1, help="Kept for interface consistency (NanoFilt is stream-based).")
 
     # Keep intermediates (useful for debugging)
