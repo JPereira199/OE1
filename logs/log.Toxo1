@@ -1,0 +1,55 @@
+Assuming unrestricted shared filesystem usage.
+host: scoville3e6
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 30
+Rules claiming more threads will be scaled down.
+Job stats:
+job                        count
+-----------------------  -------
+all                            1
+blastn_dotplot_unmapped        1
+total                          2
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:21:52 2026]
+Job 14: Running BLASTN dotplot + unmapped ID report for Toxo1_clean_AutoBl_vs_Nam
+Reason: Params have changed since last execution
+
+[Fri Feb 13 18:21:53 2026]
+Finished job 14.
+1 of 2 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:21:53 2026]
+localrule all:
+    input: /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/clean_n_filter/reads.size_filtered.fasta, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/join_cont_refs/join_crefs.fastq, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/map_contamination/query_x_ref-contamination.paf, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/decontamination/decont.fasta, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/check_gc/decont.low_gc.fasta, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/short_tandem_repeats/short_tandem_repeats.tsv, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/blast_to_abc/blast_map.abc, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/mcl_clustering/seq_distances.mci, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/make_seeds/.sentinel.make_seeds, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/block_extension/.sentinel.block_extension, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/decont_stats/summary.tsv, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/define_blocks/.sentinel.define_blocks, /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/blastn_dotplot/dotplot_table.tsv
+    jobid: 0
+    reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/blastn_dotplot/dotplot_table.tsv
+    resources: tmpdir=/tmp
+
+[Fri Feb 13 18:21:53 2026]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: .snakemake/log/2026-02-13T182150.167699.snakemake.log
+
+Final Files:
+
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/clean_n_filter/reads.size_filtered.fasta
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/join_cont_refs/join_crefs.fastq
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/map_contamination/query_x_ref-contamination.paf
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/decontamination/decont.fasta
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/check_gc/decont.low_gc.fasta
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/short_tandem_repeats/short_tandem_repeats.tsv
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/short_tandem_repeats/sequences_wo_str.fasta
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/blast_to_abc/blast_map.abc
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/mcl_clustering/seq_distances.mci
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/make_seeds/.sentinel.make_seeds
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/block_extension/.sentinel.block_extension
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/decont_stats/summary.tsv
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/define_blocks/.sentinel.define_blocks
+/home/joaco/Results/OE1/TgUru1_clean_decont_off/Data/blastn_dotplot/dotplot_table.tsv

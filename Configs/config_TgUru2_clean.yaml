@@ -1,0 +1,91 @@
+query_sequences.Path : /home/joaco/toxo_reads/reads_mapped_vs_Toxo2.mitocontigs_vs_Blocks.fasta
+cont_references.Folder : /home/joaco/cont_refs
+
+Results.Folder : /home/joaco/Results/OE1/TgUru2_clean_no_decont
+
+validation.sequence_blocks: /home/joaco/Blocks_Namasivayam_without_p.fa
+
+#filter_sizes.rule : False
+#filter_sizes.min_read_length: 500
+
+clean_n_filter.rule: True
+clean_n_filter.min_read_length: 500
+clean_n_filter.min_mean_quality: 10
+clean_n_filter.threads: 20
+
+
+join_cont_refs.rule : True
+
+map_contamination.rule: True
+map_contamination.threads: 20
+
+discard_contamination.rule: True
+#discard_contamination.min_coverage:  70
+discard_contamination.max_de : 0.20
+discard_contamination.min_query_coverage : 0.80
+discard_contamination.min_alignment_length : 90000
+
+GC_check.rule: True
+GC_check.max_GC : 40
+
+find_str.rule: True
+
+discard_str.rule: True
+discard_str.tandem_coverage: 0.40
+
+fragmet_coverage.rule: True
+
+blast_to_abc.rule: True
+blast_to_abc.min_aln_identity: 75
+blast_to_abc.min_aln_length: 50
+blast_to_abc.min_blast_word_size: 20
+blast_to_abc.threads: 20
+
+mcl_clustering.rule: True
+mcl_clustering.inflation: 2.5
+
+decont_stats.rule: True
+decont_stats.word_size: 11
+decont_stats.min_pident: 75
+decont_stats.nam_threshold: 0.50
+decont_stats.threads: 20
+
+# Make Seeds rule
+make_seeds.rule: True
+make_seeds.min_fasta_size: 35
+make_seeds.kmer_size: 35
+make_seeds.min_kmer_counts: 200
+make_seeds.threads: 20
+
+# Block Extension rule
+block_extension.rule: True
+block_extension.min_hits: 30
+block_extension.max_aln_extension: 3000
+block_extension.seed_map_coverage_threshold: 0.8
+block_extension.window_radius: 15
+block_extension.signal_threshold: 0.12
+block_extension.aln_w_step_size: 300
+block_extension.try_mean_signal: True
+block_extension.mean_signal_threshold: 0.08
+block_extension.plot: True
+block_extension.threads: 20
+
+define_blocks.rule: True
+define_blocks.threads: 20
+define_blocks.cluster_identity: 0.75
+define_blocks.cluster_coverage: 0.75
+define_blocks.retrieve_single_aln: False
+define_blocks.min_instances: 0 # Must be always 0 when you are working with extended seeds
+define_blocks.select_internals_alns: False # Must be always 0 when you are working with extended seeds
+
+
+# BLASTN dotplot + unmapped blocks
+blastn_dotplot.rule: True
+blastn_dotplot.title: Toxo2_clean_AutoBl_vs_Nam
+blastn_dotplot.word_size: 15
+blastn_dotplot.qnames: true      # show query names
+blastn_dotplot.snames: true      # show subject names
+blastn_dotplot.annot_size: 10    # font size for annotations
+blastn_dotplot.threads: 20
+
+

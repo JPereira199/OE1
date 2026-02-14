@@ -1,0 +1,1025 @@
+Assuming unrestricted shared filesystem usage.
+host: scoville3e6
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 30
+Rules claiming more threads will be scaled down.
+Job stats:
+job                        count
+-----------------------  -------
+all                            1
+blast_to_abc                   1
+blastn_dotplot_unmapped        1
+block_extension                1
+check_GC                       1
+clean_n_filter                 1
+decont_stats                   1
+define_blocks                  1
+discard_contamination          1
+discard_str                    1
+find_str                       1
+make_seeds                     1
+map_contamination              1
+mcl_clustering                 1
+total                         14
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:35:08 2026]
+Job 1: 
+        Filtering reads by:
+          - mean base quality (FASTQ only)
+          - minimum length
+        Generating length histograms before and after filtering.
+        
+Reason: Code has changed since last execution; Params have changed since last execution
+
+Activating conda environment: .snakemake/conda/c63cecc8e93ac156f958147a2860588a_
+[Fri Feb 13 18:35:10 2026]
+Finished job 1.
+1 of 14 steps (7%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:35:10 2026]
+Job 3: 
+        Maps the query fasta against the reference genomes from different contamintan organisms
+        
+Reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/clean_n_filter/reads.size_filtered.fasta
+
+[M::mm_idx_gen::64.060*1.56] collected minimizers
+[M::mm_idx_gen::67.324*2.37] sorted minimizers
+[M::main::67.324*2.37] loaded/built the index for 1970 target sequence(s)
+[M::mm_mapopt_update::69.361*2.33] mid_occ = 907
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 1970
+[M::mm_idx_stat::70.841*2.30] distinct minimizers: 113962667 (36.32% are singletons); average occurrences: 6.617; average spacing: 5.324
+[M::worker_pipeline::70.868*2.30] mapped 269 sequences
+[M::mm_idx_gen::133.714*1.97] collected minimizers
+[M::mm_idx_gen::136.460*2.33] sorted minimizers
+[M::main::136.460*2.33] loaded/built the index for 6901 target sequence(s)
+[M::mm_mapopt_update::136.460*2.33] mid_occ = 907
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 6901
+[M::mm_idx_stat::138.003*2.31] distinct minimizers: 112113254 (34.72% are singletons); average occurrences: 6.728; average spacing: 5.432
+[M::worker_pipeline::138.070*2.32] mapped 269 sequences
+[M::mm_idx_gen::155.074*2.23] collected minimizers
+[M::mm_idx_gen::155.765*2.31] sorted minimizers
+[M::main::155.765*2.31] loaded/built the index for 725 target sequence(s)
+[M::mm_mapopt_update::155.765*2.31] mid_occ = 907
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 725
+[M::mm_idx_stat::156.563*2.30] distinct minimizers: 62585244 (55.87% are singletons); average occurrences: 2.854; average spacing: 5.704
+[M::worker_pipeline::156.842*2.31] mapped 269 sequences
+[M::main] Version: 2.17-r941
+[M::main] CMD: minimap2 -x map-ont -c --secondary=no -t 20 -o /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/map_contamination/query_x_ref-contamination.paf /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/join_cont_refs/join_crefs.fastq /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/clean_n_filter/reads.size_filtered.fasta
+[M::main] Real time: 157.342 sec; CPU: 363.465 sec; Peak RSS: 28.042 GB
+[Fri Feb 13 18:37:47 2026]
+Finished job 3.
+2 of 14 steps (14%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:37:47 2026]
+Job 4: 
+        Given a PAF alignment table, discard sequences from the filtered FASTA
+        that have a "good" mapping against any contamination references, based on:
+          - min alignment length
+          - max de
+          - min query coverage
+        
+Reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/clean_n_filter/reads.size_filtered.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/map_contamination/query_x_ref-contamination.paf
+
+[Fri Feb 13 18:37:48 2026]
+Finished job 4.
+3 of 14 steps (21%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:37:48 2026]
+localrule check_GC:
+    input: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decontamination/decont.fasta
+    output: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/input_gc_table.txt, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.high_gc.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/gc_stats.tsv
+    jobid: 5
+    reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decontamination/decont.fasta
+    resources: tmpdir=/tmp
+
+[INFO][0m 269 patterns loaded from file
+[33m[WARN][0m 0 patterns loaded from file
+[Fri Feb 13 18:37:48 2026]
+Finished job 5.
+4 of 14 steps (29%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:37:48 2026]
+localrule find_str:
+    input: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta, /home/joaco/OE1/Scripts/trf
+    output: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/short_tandem_repeats.tsv
+    jobid: 6
+    reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta
+    resources: tmpdir=/tmp
+
+[Fri Feb 13 18:37:49 2026]
+Finished job 6.
+5 of 14 steps (36%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:37:49 2026]
+localrule discard_str:
+    input: /home/joaco/OE1/Scripts/discard_str.py, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/short_tandem_repeats.tsv
+    output: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/short_tandem_repeats.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/repeats.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/filtered_str.tsv
+    jobid: 7
+    reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/short_tandem_repeats.tsv
+    resources: tmpdir=/tmp
+
+[Fri Feb 13 18:37:49 2026]
+Finished job 7.
+6 of 14 steps (43%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:37:49 2026]
+localrule blast_to_abc:
+    input: /home/joaco/OE1/Scripts/blast_to_abc.py, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta
+    output: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/blastn.seqs_wo_str.inner.tsv, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/blast_map.abc, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/uninformative_sequences.fasta
+    jobid: 8
+    reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta
+    threads: 20
+    resources: tmpdir=/tmp
+
+
+
+Building a new DB, current time: 02/13/2026 18:37:50
+New DB name:   /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/decont_inner_db/sequences_wo_str.fasta
+New DB title:  /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/decont_inner_db/sequences_wo_str.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 269 sequences in 0.0113831 seconds.
+
+
+Warning: [blastn] Number of threads was reduced to 32 to match the number of available CPUs
+/home/joaco/OE1/Scripts/blast_to_abc.py:95: DeprecationWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  total_coverage_qs = group_qs_df.apply(lambda x: blast.total_coverage_temp(x, use='subject')).reset_index(name='coverage_fraction')
+Warning output db directory already exist: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/decont_inner_db
+makeblastdb ran successfully.
+Running: blastn -query /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta -db /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/decont_inner_db/sequences_wo_str.fasta -out /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/blastn.seqs_wo_str.inner.tsv -num_threads 40 -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 20 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn ran successfully.
+[Fri Feb 13 18:38:16 2026]
+Finished job 8.
+7 of 14 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:38:16 2026]
+Job 9: 
+        Clusterize a set sequences with MCL using the total coverage between them.
+        
+Reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/blast_map.abc, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta
+
+...[mclIO] writing </home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/seq_distances.mci>
+......................................
+[mclIO] wrote native interchange 271x271 matrix with 71549 entries to stream </home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/seq_distances.mci>
+[mclIO] wrote 271 tab entries to stream </home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/seq_names.list>
+[mcxload] tab has 271 entries
+[mclIO] reading </home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/seq_distances.mci>
+......................................
+[mclIO] read native interchange 271x271 matrix with 71549 entries
+[mcl] pid 812216
+ ite -------------------  chaos  time hom(avg,lo,hi) m-ie m-ex i-ex fmv
+  1  ...................   0.86  0.02 1.19/1.00/1.68 1.01 1.01 1.01  99
+  2  ...................   0.90  0.02 0.81/0.74/1.00 1.00 1.00 1.01  99
+  3  ...................   2.39  0.03 0.44/0.37/1.00 1.00 0.99 0.99  99
+  4  ...................   5.08  0.02 0.36/0.35/1.00 1.00 0.70 0.70  99
+  5  ...................   4.69  0.01 0.50/0.49/1.00 1.00 0.41 0.29  99
+  6  ...................   2.22  0.00 0.64/0.64/1.00 1.00 0.29 0.08  99
+  7  ...................   1.29  0.00 0.58/0.58/1.00 1.00 0.36 0.03  99
+  8  ...................   0.62  0.00 0.75/0.75/1.00 1.00 0.63 0.02  99
+  9  ...................   0.04  0.00 0.97/0.96/1.00 1.00 0.40 0.01   0
+ 10  ...................   0.00  0.00 1.00/1.00/1.00 1.00 0.50 0.00   0
+[mcl] jury pruning marks: <100,100,99>, out of 100
+[mcl] jury pruning synopsis: <99.9 or perfect> (cf -scheme, -do log)
+[mclIO] writing </home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/out.seq_distances.mci.I25>
+..
+[mclIO] wrote native interchange 271x2 matrix with 271 entries to stream </home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/out.seq_distances.mci.I25>
+[mcl] 2 clusters found
+[mcl] output is in /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/out.seq_distances.mci.I25
+
+Please cite:
+    Stijn van Dongen, Graph Clustering Via a Discrete Uncoupling Process,
+    SIAM Journal on Matrix Analysis and Applications, 30(1):121-141, 2008.
+    ( http://link.aip.org/link/?SJMAEL/30/121/1 )
+[mclIO] reading </home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/out.seq_distances.mci.I25>
+..
+[mclIO] read native interchange 271x2 matrix with 271 entries
+mcxdump completed successfully. Output: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/dump.mci
+[Fri Feb 13 18:38:18 2026]
+Finished job 9.
+8 of 14 steps (57%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:38:18 2026]
+localrule make_seeds:
+    input: /home/joaco/OE1/Scripts/make_seeds.py, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters
+    output: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/cluster_1.tsv, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/.sentinel.make_seeds
+    jobid: 10
+    reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters
+    threads: 20
+    resources: tmpdir=/tmp
+
+java -ea -Xmx92877m -Xms92877m -cp /home/joaco/miniconda3/envs/OE1/opt/bbmap-39.26-0/current/ jgi.KmerCountExact in=/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta k=35 threads=20 mincount=200 fastadump=f out=/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/cluster_1.tsv overwrite=true
+Executing jgi.KmerCountExact [in=/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, k=35, threads=20, mincount=200, fastadump=f, out=/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/cluster_1.tsv, overwrite=true]
+
+Set threads to 20
+Initial:
+Memory: max=97408m, total=97408m, free=97341m, used=67m
+
+Executing ukmer.KmerTableSetU [in=/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, k=35, threads=20, mincount=200, fastadump=f, out=/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/cluster_1.tsv, overwrite=true]
+
+K was changed from 35 to 34
+Initial:
+Ways=53, initialSize=128000, prefilter=f, prealloc=f
+Memory: max=97408m, total=97408m, free=97341m, used=67m
+
+After table allocation:
+Memory: max=97408m, total=97408m, free=97173m, used=235m
+
+After loading:
+Memory: max=97408m, total=97408m, free=96737m, used=671m
+
+Input:                      	269 reads 		726959 bases.
+
+For K=34
+Unique Kmers:               	77265
+Average Kmer Count:         	9.294
+Estimated Kmer Depth:       	9.293
+Estimated Read Depth:       	9.408
+
+Load Time:                  	0.212 seconds.
+Kmer Dump Time:             	0.125 seconds.
+❌ Skipping non-FASTA/Q file: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/.snakemake_timestamp
+⚠️ Skipping cluster_2.fasta: only 0 entries (min is 35)
+▶ Running: kmercountexact.sh in=/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta k=35 threads=20 mincount=200 fastadump=f out=/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/cluster_1.tsv overwrite=true
+[Fri Feb 13 18:38:19 2026]
+Finished job 10.
+9 of 14 steps (64%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:38:19 2026]
+localrule block_extension:
+    input: /home/joaco/OE1/Scripts/block_extension.py, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/cluster_1.tsv
+    output: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Visuals/block_extension, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/blocks.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/.sentinel.block_extension
+    jobid: 11
+    reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/cluster_1.tsv
+    threads: 20
+    resources: tmpdir=/tmp
+
+
+
+Building a new DB, current time: 02/13/2026 18:38:20
+New DB name:   /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/input_reads_db/cluster_1.fasta
+New DB title:  /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 269 sequences in 0.00984001 seconds.
+
+
+makeblastdb ran successfully.
+blastn ran successfully.
+Working on target seed: k:10_c:412
+Mapping seed: k:10_c:412
+
+Processing Block Number: 1
+
+Seed initial size: 34
+Warning! Alignment extension (604) != expected (634). Attempting to locate seed in consensus.
+
+Start signal Pos: 264
+Mean Start signal Pos: 270
+End signal Pos: 332
+Mean End signal Pos: 328
+
+Running: blastn -query /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.seeds.fasta -subject /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/block-temp.fasta -out /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.blast.seeds_fragment.tsv -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 10 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn_subject ran successfully.
+Working on target seed: k:5_c:413
+Working on target seed: k:6_c:413
+Working on target seed: k:4_c:413
+Working on target seed: k:31_c:398
+Working on target seed: k:1_c:414
+Working on target seed: k:3_c:414
+Working on target seed: k:14_c:409
+Working on target seed: k:2_c:414
+Working on target seed: k:0_c:414
+Mapping seed: k:0_c:414
+
+Processing Block Number: 2
+
+Seed initial size: 34
+Warning! Alignment extension (598) != expected (634). Attempting to locate seed in consensus.
+
+Start signal Pos: 260
+Mean Start signal Pos: 265
+End signal Pos: 330
+Mean End signal Pos: 326
+
+Running: blastn -query /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.seeds.fasta -subject /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/block-temp.fasta -out /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.blast.seeds_fragment.tsv -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 10 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn_subject ran successfully.
+Working on target seed: k:34_c:396
+Working on target seed: k:19_c:409
+Working on target seed: k:15_c:409
+Working on target seed: k:13_c:412
+Working on target seed: k:9_c:413
+Working on target seed: k:21_c:408
+Working on target seed: k:12_c:412
+Working on target seed: k:35_c:396
+Working on target seed: k:18_c:409
+Working on target seed: k:28_c:400
+Working on target seed: k:17_c:409
+Working on target seed: k:16_c:409
+Working on target seed: k:7_c:413
+Working on target seed: k:11_c:412
+Working on target seed: k:20_c:408
+Working on target seed: k:8_c:413
+Working on target seed: k:36_c:394
+Working on target seed: k:30_c:398
+Working on target seed: k:38_c:393
+Working on target seed: k:37_c:393
+Working on target seed: k:273_c:281
+Working on target seed: k:22_c:402
+Working on target seed: k:25_c:402
+Working on target seed: k:29_c:400
+Working on target seed: k:26_c:402
+Working on target seed: k:23_c:402
+Working on target seed: k:24_c:402
+Working on target seed: k:27_c:401
+Working on target seed: k:33_c:397
+Working on target seed: k:32_c:397
+Working on target seed: k:39_c:388
+Working on target seed: k:40_c:388
+Working on target seed: k:42_c:386
+Working on target seed: k:41_c:387
+Working on target seed: k:49_c:364
+Working on target seed: k:51_c:324
+Working on target seed: k:44_c:367
+Working on target seed: k:45_c:365
+Working on target seed: k:43_c:367
+Working on target seed: k:47_c:365
+Working on target seed: k:48_c:365
+Working on target seed: k:46_c:365
+Working on target seed: k:84_c:319
+Working on target seed: k:53_c:323
+Mapping seed: k:53_c:323
+
+Processing Block Number: 3
+
+Seed initial size: 34
+Warning! Alignment extension (611) != expected (634). Attempting to locate seed in consensus.
+
+Start signal Pos: 251
+Mean Start signal Pos: 254
+End signal Pos: 395
+Mean End signal Pos: 393
+
+Running: blastn -query /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.seeds.fasta -subject /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/block-temp.fasta -out /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.blast.seeds_fragment.tsv -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 10 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn_subject ran successfully.
+Working on target seed: k:58_c:322
+Working on target seed: k:50_c:324
+Mapping seed: k:50_c:324
+
+Processing Block Number: 4
+
+Seed initial size: 34
+Warning! Alignment extension (629) != expected (634). Attempting to locate seed in consensus.
+
+Start signal Pos: 251
+Mean Start signal Pos: 254
+End signal Pos: 397
+Mean End signal Pos: 394
+
+Running: blastn -query /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.seeds.fasta -subject /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/block-temp.fasta -out /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.blast.seeds_fragment.tsv -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 10 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn_subject ran successfully.
+Working on target seed: k:54_c:323
+Working on target seed: k:110_c:317
+Working on target seed: k:63_c:321
+Working on target seed: k:111_c:317
+Working on target seed: k:77_c:319
+Working on target seed: k:138_c:314
+Working on target seed: k:56_c:323
+Working on target seed: k:113_c:317
+Working on target seed: k:64_c:321
+Working on target seed: k:55_c:323
+Working on target seed: k:52_c:323
+Working on target seed: k:101_c:318
+Working on target seed: k:65_c:320
+Working on target seed: k:131_c:314
+Working on target seed: k:118_c:316
+Working on target seed: k:61_c:322
+Working on target seed: k:124_c:315
+Working on target seed: k:95_c:318
+Working on target seed: k:72_c:320
+Working on target seed: k:79_c:319
+Working on target seed: k:92_c:319
+Working on target seed: k:67_c:320
+Working on target seed: k:114_c:317
+Working on target seed: k:122_c:315
+Working on target seed: k:130_c:314
+Working on target seed: k:135_c:314
+Working on target seed: k:152_c:311
+Working on target seed: k:76_c:319
+Working on target seed: k:108_c:317
+Working on target seed: k:89_c:319
+Working on target seed: k:70_c:320
+Working on target seed: k:88_c:319
+Working on target seed: k:86_c:319
+Working on target seed: k:97_c:318
+Working on target seed: k:148_c:312
+Working on target seed: k:71_c:320
+Working on target seed: k:74_c:319
+Working on target seed: k:140_c:314
+Working on target seed: k:141_c:314
+Working on target seed: k:109_c:317
+Working on target seed: k:106_c:318
+Working on target seed: k:100_c:318
+Working on target seed: k:90_c:319
+Working on target seed: k:134_c:314
+Working on target seed: k:137_c:314
+Working on target seed: k:145_c:313
+Working on target seed: k:146_c:313
+Working on target seed: k:126_c:315
+Working on target seed: k:132_c:314
+Working on target seed: k:133_c:314
+Working on target seed: k:62_c:322
+Working on target seed: k:57_c:323
+Working on target seed: k:115_c:317
+Working on target seed: k:60_c:322
+Working on target seed: k:59_c:322
+Working on target seed: k:85_c:319
+Working on target seed: k:73_c:319
+Working on target seed: k:78_c:319
+Working on target seed: k:91_c:319
+Working on target seed: k:94_c:318
+Working on target seed: k:83_c:319
+Working on target seed: k:96_c:318
+Working on target seed: k:81_c:319
+Working on target seed: k:75_c:319
+Working on target seed: k:104_c:318
+Working on target seed: k:102_c:318
+Working on target seed: k:144_c:313
+Working on target seed: k:161_c:310
+Working on target seed: k:68_c:320
+Working on target seed: k:80_c:319
+Working on target seed: k:69_c:320
+Working on target seed: k:139_c:314
+Working on target seed: k:136_c:314
+Working on target seed: k:66_c:320
+Working on target seed: k:153_c:311
+Working on target seed: k:105_c:318
+Working on target seed: k:107_c:318
+Working on target seed: k:127_c:315
+Working on target seed: k:121_c:316
+Working on target seed: k:143_c:313
+Working on target seed: k:147_c:312
+Working on target seed: k:128_c:315
+Working on target seed: k:82_c:319
+Working on target seed: k:87_c:319
+Working on target seed: k:98_c:318
+Working on target seed: k:116_c:316
+Working on target seed: k:103_c:318
+Working on target seed: k:169_c:309
+Working on target seed: k:175_c:308
+Working on target seed: k:120_c:316
+Working on target seed: k:142_c:314
+Working on target seed: k:99_c:318
+Working on target seed: k:112_c:317
+Working on target seed: k:173_c:309
+Working on target seed: k:149_c:312
+Working on target seed: k:125_c:315
+Working on target seed: k:93_c:318
+Working on target seed: k:172_c:309
+Working on target seed: k:117_c:316
+Working on target seed: k:164_c:310
+Working on target seed: k:366_c:215
+Working on target seed: k:176_c:307
+Working on target seed: k:177_c:307
+Working on target seed: k:123_c:315
+Working on target seed: k:119_c:316
+Working on target seed: k:163_c:310
+Working on target seed: k:160_c:310
+Working on target seed: k:179_c:306
+Working on target seed: k:129_c:315
+Working on target seed: k:157_c:310
+Working on target seed: k:168_c:309
+Working on target seed: k:150_c:311
+Working on target seed: k:178_c:307
+Working on target seed: k:159_c:310
+Working on target seed: k:158_c:310
+Working on target seed: k:162_c:310
+Working on target seed: k:151_c:311
+Working on target seed: k:166_c:310
+Working on target seed: k:174_c:308
+Working on target seed: k:155_c:311
+Working on target seed: k:154_c:311
+Working on target seed: k:156_c:310
+Working on target seed: k:165_c:310
+Working on target seed: k:171_c:309
+Working on target seed: k:170_c:309
+Working on target seed: k:167_c:309
+Working on target seed: k:218_c:284
+Mapping seed: k:218_c:284
+
+Processing Block Number: 5
+
+Seed initial size: 34
+Warning! Alignment extension (615) != expected (634). Attempting to locate seed in consensus.
+
+Start signal Pos: 298
+Mean Start signal Pos: 298
+End signal Pos: 476
+Mean End signal Pos: 473
+
+Running: blastn -query /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.seeds.fasta -subject /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/block-temp.fasta -out /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.blast.seeds_fragment.tsv -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 10 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn_subject ran successfully.
+Working on target seed: k:184_c:289
+Working on target seed: k:227_c:283
+Working on target seed: k:297_c:279
+Working on target seed: k:192_c:288
+Working on target seed: k:213_c:285
+Working on target seed: k:276_c:281
+Working on target seed: k:332_c:271
+Working on target seed: k:233_c:283
+Working on target seed: k:204_c:286
+Working on target seed: k:182_c:289
+Working on target seed: k:180_c:290
+Mapping seed: k:180_c:290
+
+Processing Block Number: 6
+
+Seed initial size: 34
+Warning! Alignment extension (622) != expected (634). Attempting to locate seed in consensus.
+
+Start signal Pos: 189
+Mean Start signal Pos: 193
+End signal Pos: 361
+Mean End signal Pos: 357
+
+Running: blastn -query /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.seeds.fasta -subject /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/block-temp.fasta -out /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.blast.seeds_fragment.tsv -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 10 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn_subject ran successfully.
+Working on target seed: k:185_c:289
+Working on target seed: k:200_c:286
+Working on target seed: k:205_c:285
+Working on target seed: k:181_c:289
+Working on target seed: k:308_c:278
+Working on target seed: k:234_c:283
+Working on target seed: k:209_c:285
+Working on target seed: k:296_c:279
+Working on target seed: k:277_c:280
+Working on target seed: k:226_c:283
+Working on target seed: k:231_c:283
+Working on target seed: k:282_c:280
+Working on target seed: k:219_c:284
+Working on target seed: k:207_c:285
+Working on target seed: k:203_c:286
+Working on target seed: k:197_c:287
+Working on target seed: k:201_c:286
+Working on target seed: k:186_c:289
+Working on target seed: k:194_c:287
+Working on target seed: k:317_c:272
+Working on target seed: k:196_c:287
+Working on target seed: k:339_c:270
+Working on target seed: k:195_c:287
+Working on target seed: k:261_c:281
+Working on target seed: k:271_c:281
+Working on target seed: k:255_c:282
+Working on target seed: k:189_c:288
+Working on target seed: k:193_c:288
+Working on target seed: k:188_c:289
+Working on target seed: k:190_c:288
+Working on target seed: k:333_c:271
+Working on target seed: k:206_c:285
+Working on target seed: k:222_c:284
+Working on target seed: k:229_c:283
+Working on target seed: k:208_c:285
+Working on target seed: k:211_c:285
+Working on target seed: k:295_c:279
+Working on target seed: k:232_c:283
+Working on target seed: k:235_c:283
+Working on target seed: k:230_c:283
+Working on target seed: k:191_c:288
+Working on target seed: k:183_c:289
+Working on target seed: k:267_c:281
+Working on target seed: k:187_c:289
+Working on target seed: k:249_c:282
+Working on target seed: k:239_c:282
+Working on target seed: k:217_c:284
+Working on target seed: k:202_c:286
+Working on target seed: k:223_c:284
+Working on target seed: k:225_c:284
+Working on target seed: k:289_c:279
+Working on target seed: k:270_c:281
+Working on target seed: k:214_c:284
+Working on target seed: k:321_c:272
+Working on target seed: k:335_c:271
+Working on target seed: k:304_c:278
+Working on target seed: k:216_c:284
+Working on target seed: k:215_c:284
+Working on target seed: k:224_c:284
+Working on target seed: k:221_c:284
+Working on target seed: k:283_c:280
+Working on target seed: k:298_c:279
+Working on target seed: k:291_c:279
+Working on target seed: k:278_c:280
+Working on target seed: k:240_c:282
+Working on target seed: k:242_c:282
+Working on target seed: k:266_c:281
+Working on target seed: k:320_c:272
+Working on target seed: k:220_c:284
+Working on target seed: k:210_c:285
+Working on target seed: k:212_c:285
+Working on target seed: k:330_c:271
+Working on target seed: k:244_c:282
+Working on target seed: k:252_c:282
+Working on target seed: k:259_c:281
+Working on target seed: k:257_c:282
+Working on target seed: k:246_c:282
+Working on target seed: k:248_c:282
+Working on target seed: k:263_c:281
+Working on target seed: k:262_c:281
+Working on target seed: k:322_c:272
+Working on target seed: k:310_c:278
+Working on target seed: k:254_c:282
+Working on target seed: k:286_c:280
+Working on target seed: k:293_c:279
+Working on target seed: k:300_c:278
+Working on target seed: k:269_c:281
+Working on target seed: k:272_c:281
+Working on target seed: k:275_c:281
+Working on target seed: k:274_c:281
+Working on target seed: k:228_c:283
+Working on target seed: k:288_c:279
+Working on target seed: k:279_c:280
+Working on target seed: k:281_c:280
+Working on target seed: k:313_c:277
+Working on target seed: k:336_c:271
+Working on target seed: k:334_c:271
+Working on target seed: k:309_c:278
+Working on target seed: k:268_c:281
+Working on target seed: k:264_c:281
+Working on target seed: k:258_c:282
+Working on target seed: k:256_c:282
+Working on target seed: k:253_c:282
+Working on target seed: k:241_c:282
+Working on target seed: k:245_c:282
+Working on target seed: k:199_c:286
+Working on target seed: k:260_c:281
+Working on target seed: k:247_c:282
+Working on target seed: k:198_c:286
+Working on target seed: k:341_c:270
+Working on target seed: k:280_c:280
+Working on target seed: k:284_c:280
+Working on target seed: k:303_c:278
+Working on target seed: k:305_c:278
+Working on target seed: k:307_c:278
+Working on target seed: k:302_c:278
+Working on target seed: k:314_c:277
+Working on target seed: k:325_c:271
+Working on target seed: k:285_c:280
+Working on target seed: k:301_c:278
+Working on target seed: k:290_c:279
+Working on target seed: k:292_c:279
+Working on target seed: k:287_c:279
+Working on target seed: k:306_c:278
+Working on target seed: k:315_c:277
+Working on target seed: k:299_c:278
+Working on target seed: k:237_c:282
+Working on target seed: k:265_c:281
+Working on target seed: k:294_c:279
+Working on target seed: k:331_c:271
+Working on target seed: k:329_c:271
+Working on target seed: k:236_c:283
+Working on target seed: k:250_c:282
+Working on target seed: k:243_c:282
+Working on target seed: k:251_c:282
+Working on target seed: k:311_c:277
+Working on target seed: k:238_c:282
+Working on target seed: k:312_c:277
+Working on target seed: k:344_c:270
+Working on target seed: k:338_c:270
+Working on target seed: k:349_c:270
+Working on target seed: k:345_c:270
+Working on target seed: k:328_c:271
+Working on target seed: k:316_c:273
+Working on target seed: k:327_c:271
+Working on target seed: k:323_c:272
+Working on target seed: k:326_c:271
+Working on target seed: k:337_c:270
+Working on target seed: k:340_c:270
+Working on target seed: k:348_c:270
+Working on target seed: k:324_c:272
+Working on target seed: k:346_c:270
+Working on target seed: k:347_c:270
+Working on target seed: k:318_c:272
+Working on target seed: k:342_c:270
+Working on target seed: k:319_c:272
+Working on target seed: k:343_c:270
+Working on target seed: k:358_c:216
+Mapping seed: k:358_c:216
+
+Processing Block Number: 7
+
+Seed initial size: 34
+Warning! Alignment extension (627) != expected (634). Attempting to locate seed in consensus.
+
+Start signal Pos: 80
+Mean Start signal Pos: 85
+End signal Pos: 426
+Mean End signal Pos: 423
+
+Running: blastn -query /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.seeds.fasta -subject /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/block-temp.fasta -out /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/temp.blast.seeds_fragment.tsv -reward 1 -gapextend 2 -gapopen 5 -penalty -2 -word_size 10 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen'
+blastn_subject ran successfully.
+Working on target seed: k:360_c:216
+Working on target seed: k:357_c:216
+Working on target seed: k:351_c:217
+Working on target seed: k:364_c:215
+Working on target seed: k:372_c:214
+Working on target seed: k:359_c:216
+Working on target seed: k:411_c:209
+Working on target seed: k:462_c:201
+Working on target seed: k:465_c:201
+Working on target seed: k:412_c:209
+Working on target seed: k:361_c:216
+Working on target seed: k:407_c:210
+Working on target seed: k:409_c:209
+Working on target seed: k:410_c:209
+Working on target seed: k:356_c:217
+Working on target seed: k:355_c:217
+Working on target seed: k:363_c:215
+Working on target seed: k:362_c:216
+Working on target seed: k:350_c:217
+Working on target seed: k:370_c:214
+Working on target seed: k:423_c:207
+Working on target seed: k:461_c:202
+Working on target seed: k:376_c:213
+Working on target seed: k:413_c:208
+Working on target seed: k:371_c:214
+Working on target seed: k:369_c:214
+Working on target seed: k:368_c:214
+Working on target seed: k:352_c:217
+Working on target seed: k:353_c:217
+Working on target seed: k:354_c:217
+Working on target seed: k:398_c:211
+Working on target seed: k:403_c:210
+Working on target seed: k:399_c:211
+Working on target seed: k:393_c:212
+Working on target seed: k:386_c:212
+Working on target seed: k:389_c:212
+Working on target seed: k:402_c:210
+Working on target seed: k:377_c:213
+Working on target seed: k:391_c:212
+Working on target seed: k:365_c:215
+Working on target seed: k:390_c:212
+Working on target seed: k:430_c:207
+Working on target seed: k:454_c:205
+Working on target seed: k:378_c:213
+Working on target seed: k:384_c:212
+Working on target seed: k:380_c:212
+Working on target seed: k:396_c:212
+Working on target seed: k:394_c:212
+Working on target seed: k:367_c:214
+Working on target seed: k:375_c:213
+Working on target seed: k:385_c:212
+Working on target seed: k:379_c:212
+Working on target seed: k:373_c:213
+Working on target seed: k:383_c:212
+Working on target seed: k:447_c:206
+Working on target seed: k:438_c:206
+Working on target seed: k:388_c:212
+Working on target seed: k:397_c:211
+Working on target seed: k:404_c:210
+Working on target seed: k:424_c:207
+Working on target seed: k:414_c:208
+Working on target seed: k:426_c:207
+Working on target seed: k:382_c:212
+Working on target seed: k:374_c:213
+Working on target seed: k:441_c:206
+Working on target seed: k:405_c:210
+Working on target seed: k:392_c:212
+Working on target seed: k:387_c:212
+Working on target seed: k:406_c:210
+Working on target seed: k:400_c:211
+Working on target seed: k:408_c:210
+Working on target seed: k:435_c:206
+Working on target seed: k:428_c:207
+Working on target seed: k:440_c:206
+Working on target seed: k:427_c:207
+Working on target seed: k:450_c:205
+Working on target seed: k:401_c:211
+Working on target seed: k:431_c:207
+Working on target seed: k:456_c:204
+Working on target seed: k:464_c:201
+Working on target seed: k:433_c:207
+Working on target seed: k:425_c:207
+Working on target seed: k:422_c:207
+Working on target seed: k:416_c:208
+Working on target seed: k:453_c:205
+Working on target seed: k:395_c:212
+Working on target seed: k:381_c:212
+Working on target seed: k:444_c:206
+Working on target seed: k:434_c:206
+Working on target seed: k:446_c:206
+Working on target seed: k:451_c:205
+Working on target seed: k:443_c:206
+Working on target seed: k:439_c:206
+Working on target seed: k:452_c:205
+Working on target seed: k:420_c:207
+Working on target seed: k:415_c:208
+Working on target seed: k:460_c:202
+Working on target seed: k:429_c:207
+Working on target seed: k:432_c:207
+Working on target seed: k:421_c:207
+Working on target seed: k:417_c:208
+Working on target seed: k:436_c:206
+Working on target seed: k:467_c:201
+Working on target seed: k:466_c:201
+Working on target seed: k:418_c:208
+Working on target seed: k:457_c:203
+Working on target seed: k:469_c:201
+Working on target seed: k:419_c:208
+Working on target seed: k:455_c:205
+Working on target seed: k:442_c:206
+Working on target seed: k:468_c:201
+Working on target seed: k:463_c:201
+Working on target seed: k:459_c:203
+Working on target seed: k:445_c:206
+Working on target seed: k:458_c:203
+Working on target seed: k:437_c:206
+Working on target seed: k:448_c:206
+Working on target seed: k:449_c:206
+Blocks FASTA: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/blocks.fasta
+Mapped seeds: 470
+Blocks found: 7
+[Fri Feb 13 18:39:11 2026]
+Finished job 11.
+10 of 14 steps (71%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:39:11 2026]
+Job 12: 
+        Computing decontamination statistics and NAM-block coverage across pipeline steps.
+        Generating per-step coverage plots and a global summary barplot.
+        
+Reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decontamination/decont.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/clean_n_filter/reads.size_filtered.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta
+
+Activating conda environment: .snakemake/conda/b5b19512158d811014dd67994c020dfc_
+
+
+Building a new DB, current time: 02/13/2026 18:39:12
+New DB name:   /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/01_Input_Sequences/blastdb/reads_mapped_vs_Toxo2.mitocontigs_vs_Blocks.fasta
+New DB title:  /home/joaco/toxo_reads/reads_mapped_vs_Toxo2.mitocontigs_vs_Blocks.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/01_Input_Sequences/blastdb/reads_mapped_vs_Toxo2.mitocontigs_vs_Blocks.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 388 sequences in 0.011075 seconds.
+
+
+
+
+Building a new DB, current time: 02/13/2026 18:39:13
+New DB name:   /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/02_Clean_Reads/blastdb/reads.size_filtered.fasta
+New DB title:  /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/clean_n_filter/reads.size_filtered.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/02_Clean_Reads/blastdb/reads.size_filtered.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 269 sequences in 0.0101521 seconds.
+
+
+
+
+Building a new DB, current time: 02/13/2026 18:39:14
+New DB name:   /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/03_Decontamination/blastdb/decont.fasta
+New DB title:  /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decontamination/decont.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/03_Decontamination/blastdb/decont.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 269 sequences in 0.0102849 seconds.
+
+
+
+
+Building a new DB, current time: 02/13/2026 18:39:15
+New DB name:   /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/04_GC_filter/blastdb/decont.low_gc.fasta
+New DB title:  /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/04_GC_filter/blastdb/decont.low_gc.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 269 sequences in 0.0104661 seconds.
+
+
+
+
+Building a new DB, current time: 02/13/2026 18:39:15
+New DB name:   /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/05_STR_filter/blastdb/sequences_wo_str.fasta
+New DB title:  /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/05_STR_filter/blastdb/sequences_wo_str.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 269 sequences in 0.010154 seconds.
+
+
+
+
+Building a new DB, current time: 02/13/2026 18:39:16
+New DB name:   /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/06_MCL_filter/blastdb/cluster_1.fasta
+New DB title:  /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/sequneces_clusters/cluster_1.fasta
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/06_MCL_filter/blastdb/cluster_1.fasta
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 269 sequences in 0.00986814 seconds.
+
+
+Warning output db directory already exist: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/01_Input_Sequences/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+Warning output db directory already exist: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/02_Clean_Reads/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+Warning output db directory already exist: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/03_Decontamination/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+Warning output db directory already exist: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/04_GC_filter/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+Warning output db directory already exist: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/05_STR_filter/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+Warning output db directory already exist: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/06_MCL_filter/blastdb
+makeblastdb ran successfully.
+blastn ran successfully.
+[Fri Feb 13 18:39:17 2026]
+Finished job 12.
+11 of 14 steps (79%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:39:17 2026]
+Job 13: 
+        Defining blocks by reciprocal BLAST + iterative clustering (define_blocks).
+        Input: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/blocks.fasta
+        
+Reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/blocks.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/.sentinel.block_extension
+
+[Fri Feb 13 18:39:19 2026]
+Finished job 13.
+12 of 14 steps (86%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:39:19 2026]
+Job 14: Running BLASTN dotplot + unmapped ID report for Toxo2_clean_AutoBl_vs_Nam
+Reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/define_blocks/block_iterations/1/retrieve/regions.fasta
+
+[Fri Feb 13 18:39:20 2026]
+Finished job 14.
+13 of 14 steps (93%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Feb 13 18:39:20 2026]
+localrule all:
+    input: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/clean_n_filter/reads.size_filtered.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/join_cont_refs/join_crefs.fastq, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/map_contamination/query_x_ref-contamination.paf, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decontamination/decont.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/short_tandem_repeats.tsv, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/blast_map.abc, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/seq_distances.mci, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/.sentinel.make_seeds, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/.sentinel.block_extension, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/summary.tsv, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/define_blocks/.sentinel.define_blocks, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blastn_dotplot/dotplot_table.tsv
+    jobid: 0
+    reason: Input files updated by another job: /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decontamination/decont.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/clean_n_filter/reads.size_filtered.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/.sentinel.block_extension, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/blast_map.abc, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/.sentinel.make_seeds, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/seq_distances.mci, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blastn_dotplot/dotplot_table.tsv, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/summary.tsv, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/define_blocks/.sentinel.define_blocks, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/short_tandem_repeats.tsv, /home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/map_contamination/query_x_ref-contamination.paf
+    resources: tmpdir=/tmp
+
+[Fri Feb 13 18:39:20 2026]
+Finished job 0.
+14 of 14 steps (100%) done
+Complete log: .snakemake/log/2026-02-13T183506.145319.snakemake.log
+
+Final Files:
+
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/clean_n_filter/reads.size_filtered.fasta
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/join_cont_refs/join_crefs.fastq
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/map_contamination/query_x_ref-contamination.paf
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decontamination/decont.fasta
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/check_gc/decont.low_gc.fasta
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/short_tandem_repeats.tsv
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/short_tandem_repeats/sequences_wo_str.fasta
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blast_to_abc/blast_map.abc
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/mcl_clustering/seq_distances.mci
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/make_seeds/.sentinel.make_seeds
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/block_extension/.sentinel.block_extension
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/decont_stats/summary.tsv
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/define_blocks/.sentinel.define_blocks
+/home/joaco/Results/OE1/TgUru2_clean_no_decont/Data/blastn_dotplot/dotplot_table.tsv

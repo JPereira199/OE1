@@ -95,6 +95,7 @@ rule clean_n_filter:
           --out_fasta {output.filtered_fasta} \
           --out_fig {output.fig} \
           > {log} 2>&1
+          
         """
    
 
@@ -444,9 +445,13 @@ NAM_LABELS_QUOTED = ""
 
 if config.get("decont_stats.rule"):
 
-    if config.get("filter_sizes.rule"):
-        NAM_LABELS.append("Input")
-        NAM_SUBJECTS.append(os.path.join(*task["filter_sizes.rule"]))
+    if config.get("query_sequences.Path"):
+        NAM_LABELS.append("Input Sequences")
+        NAM_SUBJECTS.append(os.path.join(config["query_sequences.Path"]))
+
+    if config.get("clean_n_filter.rule"):
+        NAM_LABELS.append("Clean Reads")
+        NAM_SUBJECTS.append(os.path.join(*task["clean_n_filter.rule"]))
 
     if config.get("discard_contamination.rule"):
         NAM_LABELS.append("Decontamination")
